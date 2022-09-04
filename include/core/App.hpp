@@ -27,6 +27,7 @@ class App {
         int _width;
         int _height;
         sf::RenderWindow _window;
+        sf::RenderTexture _display;
         sf::Color _clearColor = sf::Color::Black;
         struct keybindings keybindings = {
             .pause = sf::Keyboard::Key::Escape,
@@ -40,10 +41,9 @@ class App {
         {
             _window.create(sf::VideoMode(width, height), _title);
             _window.setFramerateLimit(60);
+            _display.create(width, height);
         };
-        ~App() {
-            _window.close();
-        };
+        virtual ~App() = default;
 
         bool isRunning(void) const { return _isRunning; }
         bool isPaused(void) const { return _isPaused; }
@@ -69,7 +69,7 @@ class App {
         \brief Draws the drawable on the window
         TODO: draw it on a display next
         */
-        void draw(sf::Drawable const &drawable) { _window.draw(drawable); }
+        void draw(sf::Drawable const &drawable);
         /*
         \brief Clear the window with clear color, then draws all the drawable
         objects
@@ -77,5 +77,5 @@ class App {
         TODO: add drawables to a list and draw them all at once
         */
         void draw(void);
-        void display(void) { _window.display(); }
+        void display(void);
 };
