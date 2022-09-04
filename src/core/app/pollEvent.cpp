@@ -9,7 +9,6 @@
 
 bool App::pollEvent(CustomEvent &event)
 {
-    // TODO: add event listener
     bool result = _window.pollEvent(event);
 
     if (result == false)
@@ -23,6 +22,13 @@ bool App::pollEvent(CustomEvent &event)
             toggleFullscreen();
         if (event.key.code == keybindings.screenshot)
             takeScreenshot();
+    }
+    if (event.type == sf::Event::Resized) {
+        sf::View view = _display.getView();
+        _width = event.size.width;
+        _height = event.size.height;
+        view.setSize((float)_width, (float)_height);
+        _display.setView(view);
     }
     return true;
 }

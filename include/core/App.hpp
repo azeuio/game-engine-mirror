@@ -24,8 +24,8 @@ class App {
         bool _isRunning = true;
         bool _isPaused = false;
         std::string _title;
-        int _width;
-        int _height;
+        uint _width;
+        uint _height;
         sf::RenderWindow _window;
         sf::RenderTexture _display;
         sf::Color _clearColor = sf::Color::Black;
@@ -35,8 +35,7 @@ class App {
             .screenshot = sf::Keyboard::Key::F12
         };
     public:
-
-        App(std::string const &title, int width, int height) :
+        App(std::string const &title, uint width, uint height) :
         _title(title), _width(width), _height(height)
         {
             _window.create(sf::VideoMode(width, height), _title);
@@ -48,6 +47,8 @@ class App {
         bool isRunning(void) const { return _isRunning; }
         bool isPaused(void) const { return _isPaused; }
         sf::RenderWindow &getWindow(void) { return _window; }
+        sf::RenderTexture &getDisplay(void) { return _display; }
+        sf::View const &getView(void) const { return _display.getView(); }
 
         void setClearColor(sf::Color const &color) { _clearColor = color; }
 
@@ -67,14 +68,11 @@ class App {
         bool pollEvent(CustomEvent &event);
         /*
         \brief Draws the drawable on the window
-        TODO: draw it on a display next
         */
         void draw(sf::Drawable const &drawable);
         /*
         \brief Clear the window with clear color, then draws all the drawable
         objects
-        TODO: draw it on a display next
-        TODO: add drawables to a list and draw them all at once
         */
         void draw(void);
         void display(void);
