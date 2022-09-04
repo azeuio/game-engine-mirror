@@ -11,7 +11,7 @@
 
 int main(void)
 {
-    Demo app("SFML works!", 200, 200);
+    Demo app("SFML works!", 1080, 720);
     CustomEvent event;
     sf::CircleShape shape(100.f);
 
