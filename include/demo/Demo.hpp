@@ -14,3 +14,5 @@ class Demo : public App {
         using App::App;
         void update(void) final;
 };
+
+void demo_1(void);
