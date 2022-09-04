@@ -53,6 +53,10 @@ class App {
 
         void stop(void);
         void toggleFullscreen(void);
+        /*
+        \brief Takes a screenshot of the current window and saves it in the
+        screenshots/ folder
+        */
         void takeScreenshot(void) const;
         virtual void update(void) = 0;
         /*

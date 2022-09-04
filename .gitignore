@@ -33,3 +33,7 @@
 
 # IDE files
 .vscode/
+
+# generated folders
+screenshots/
+obj/
