@@ -38,5 +38,10 @@
 screenshots/
 obj/
 
+# gcov files
+*.gcov
+*.gcda
+*.gcno
+
 # misc
 .directory
