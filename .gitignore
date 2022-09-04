@@ -37,3 +37,6 @@
 # generated folders
 screenshots/
 obj/
+
+# misc
+.directory
