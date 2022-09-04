@@ -35,6 +35,9 @@ class App {
             .screenshot = sf::Keyboard::Key::F12
         };
     public:
+        App(void) : _title("Game Engine"), _width(1080), _height(720) {
+            _display.create(_width, _height);
+        }
         App(std::string const &title, uint width, uint height) :
         _title(title), _width(width), _height(height)
         {
