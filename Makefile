@@ -13,11 +13,13 @@ EXTENSION	=	.cpp
 
 DEPENDENCIES	=	dependencies.d
 
+TESTS_DIR	=	tests/
+
 SRC	=	$(shell find src -name "*$(EXTENSION)" -type f)
 
 OBJ	=	$(SRC:$(EXTENSION)=.o)
 
-CFLAGS	=	-Wall -Wextra -Werror -Iinclude #-O3
+CFLAGS	=	-Wall -Wextra -Werror -Iinclude -O3
 
 LDFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
 
@@ -46,8 +48,9 @@ clean:
 
 clean_gcovr:
 	@echo -e "\033[1;31mCleaning gcovr...\033[0m"
-	@$(RM) *.gcda
-	@$(RM) *.gcno
+	@$(RM) $(shell find . -name "*.gcda")
+	@$(RM) $(shell find . -name "*.gcno")
+	@$(RM) $(shell find . -name "*.gcov")
 
 fclean: clean clean_gcovr
 	@echo -e "\033[1;31mCleaning executable...\033[0m"
@@ -56,17 +59,18 @@ fclean: clean clean_gcovr
 re: fclean all
 
 tests_run: NAME = unit_tests
-tests_run: fclean run_tests coverage
+tests_run: run_tests coverage
 
-run_tests:
+run_tests: fclean
 	@echo -e "\033[1;32mRunning tests...\033[0m"
-	@$(CC) $(shell find src -name "*.cpp" -type f | \
+	@$(CC) $(shell find src -name "*$(EXTENSION)" -type f | \
 	grep -v main.cpp | grep -v src/demo) \
+	$(shell find $(TESTS_DIR) -name "*$(EXTENSION)" -type f) \
 	-o $(NAME) $(CFLAGS) $(LDFLAGS) --coverage -lcriterion
 	@./$(NAME)
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 
 coverage:
-	@gcovr --exclude tests/
+	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR)
 
 .phony: all clean fclean
