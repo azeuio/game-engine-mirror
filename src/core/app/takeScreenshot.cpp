@@ -17,7 +17,7 @@ static bool fileExists(const std::string &name)
     return f.good();
 }
 
-static std::string GetNextAvailableFilename(std::string filename)
+static std::string GetNextAvailableFilename(std::string const& filename)
 {
     std::string alternateFilename = filename;
     int fileNameIndex = 1;
