@@ -60,8 +60,9 @@ tests_run: fclean run_tests coverage
 
 run_tests:
 	@echo -e "\033[1;32mRunning tests...\033[0m"
-	@$(CC) $(filter-out src/main.cpp,$(SRC)) -o $(NAME) $(CFLAGS) $(LDFLAGS) \
-	--coverage -lcriterion
+	@$(CC) $(shell find src -name "*.cpp" -type f | \
+	grep -v main.cpp | grep -v src/demo) \
+	-o $(NAME) $(CFLAGS) $(LDFLAGS) --coverage -lcriterion
 	@./$(NAME)
 	@$(RM) $(NAME)
 
