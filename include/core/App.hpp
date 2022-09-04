@@ -46,6 +46,9 @@ class App {
 
         bool isRunning(void) const { return _isRunning; }
         bool isPaused(void) const { return _isPaused; }
+        bool isFullscreen(void) const { return _isFullscreen; }
+        uint getWidth(void) const { return _width; }
+        uint getHeight(void) const { return _height; }
         sf::RenderWindow &getWindow(void) { return _window; }
         sf::RenderTexture &getDisplay(void) { return _display; }
         sf::View const &getView(void) const { return _display.getView(); }
