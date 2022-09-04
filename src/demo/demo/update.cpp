@@ -9,5 +9,9 @@
 
 void Demo::update(void)
 {
-    // Doesn't need to do anything yet
+    if (isPaused()) {
+        setClearColor(sf::Color::Blue);
+    } else {
+        setClearColor(sf::Color::Red);
+    }
 }

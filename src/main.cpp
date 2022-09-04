@@ -21,11 +21,6 @@ int main(void)
         while (app.pollEvent(event)) {
             // Every event is handled by the app
         }
-        if (app.isPaused()) {
-            app.setClearColor(sf::Color::Blue);
-        } else {
-            app.setClearColor(sf::Color::Red);
-        }
         app.update();
         app.draw();
         app.draw(shape);
