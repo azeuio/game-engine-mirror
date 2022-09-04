@@ -71,6 +71,7 @@ run_tests: fclean
 	$(RM) $(NAME)
 
 coverage:
+	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR)
 	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR) -b
 
 .phony: all clean fclean
