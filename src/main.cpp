@@ -7,10 +7,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "demo/Demo.hpp"
+#include "demo/startDemo.hpp"
 
 int main(void)
 {
-    demo_1();
-    return 0;
+    return launchDemo();
 }
