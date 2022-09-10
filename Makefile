@@ -19,7 +19,7 @@ TEST_SRC	=	$(shell find $(TESTS_DIR) -name "*$(EXTENSION)" -type f)
 
 SRC	=	$(shell find src -name "*$(EXTENSION)" -type f)
 
-OBJ	=	$(SRC:$(EXTENSION)=.o)
+OBJ	=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC))
 
 CFLAGS	=	-Wall -Wextra -Werror -Iinclude -O3
 
@@ -28,34 +28,32 @@ LDFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
 all: $(DEPENDENCIES) $(NAME)
 
 $(DEPENDENCIES): $(SRC)
-	@echo -e "\033[1;32mGenerating dependencies...\033[0m"
+	@echo "\033[1;32mGenerating dependencies...\033[0m"
 	@$(RM) $@
 	@$(CC) $(CFLAGS) -MM $^ >> $@;
 
 include $(DEPENDENCIES)
-
-%.o: %$(EXTENSION)
-	@echo -e "\033[34mCompiling $<\033[0m"
+obj/%.o: src/%$(EXTENSION)
+	@echo "\033[34mCompiling $<\033[0m"
 	@mkdir -p $$(echo $(@D) | sed 's/src/obj/g')
 	@$(CC) -c $< -o $@ $(CFLAGS)
-	@mv $@ $$(echo $@ | sed 's/src/obj/g')
 
 $(NAME): $(OBJ)
-	@echo -e "\033[1;32mLinking $@\033[0m"
+	@echo "\033[1;32mLinking $@\033[0m"
 	@$(CC) $(shell find obj -name *.o) -o $(NAME) $(LDFLAGS) $(CFLAGS)
 
 clean:
-	@echo -e "\033[1;31mCleaning objects...\033[0m"
+	@echo "\033[1;31mCleaning objects...\033[0m"
 	@$(RM) -r obj
 
 clean_gcovr:
-	@echo -e "\033[1;31mCleaning gcovr...\033[0m"
+	@echo "\033[1;31mCleaning gcovr...\033[0m"
 	@$(RM) $(shell find . -name "*.gcda")
 	@$(RM) $(shell find . -name "*.gcno")
 	@$(RM) $(shell find . -name "*.gcov")
 
 fclean: clean clean_gcovr
-	@echo -e "\033[1;31mCleaning executable...\033[0m"
+	@echo "\033[1;31mCleaning executable...\033[0m"
 	@$(RM) $(NAME)
 
 re: fclean all
@@ -82,7 +80,7 @@ run_tests: fclean
 	*/\n\n" > include/tests/set_env_display.hpp
 	@printf "#define DISPLAY 0\n" >> include/tests/set_env_display.hpp
 endif
-	@echo -e "\033[1;32mRunning tests...\033[0m"
+	@echo "\033[1;32mRunning tests...\033[0m"
 	@$(CC) $(shell find src -name "*$(EXTENSION)" -type f | \
 	grep -v main.cpp | grep -v src/demo) \
 	$(TEST_SRC) \
