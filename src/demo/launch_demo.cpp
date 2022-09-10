@@ -12,24 +12,19 @@ int launchDemo(void)
 {
     Demo app("SFML works!");
     CustomEvent event;
-    sf::CircleShape shape;
-    sf::View &camera = app.getCamera();
+    sf::CircleShape circle(100.f);
 
-    shape.setRadius(camera.getSize().x / 32.f);
-    shape.setOrigin(shape.getRadius(), shape.getRadius());
-    shape.setFillColor(sf::Color::Green);
+    circle.setOrigin(circle.getRadius(), circle.getRadius());
+    circle.setFillColor(sf::Color::Green);
     app.setClearColor(sf::Color::Red);
-    camera.setCenter(0, 0);
-
     while (app.isRunning()) {
         while (app.pollEvent(event)) {
-            // // Every event is handled by the app
+            // Every event is handled by the app
         }
         app.update();
         app.draw();
-        app.draw(shape);
+        app.draw(circle);
         app.display();
     }
-    printf("\n");
     return 0;
 }

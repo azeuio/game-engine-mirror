@@ -30,7 +30,7 @@ all: $(DEPENDENCIES) $(NAME)
 $(DEPENDENCIES): $(SRC)
 	@echo "\033[1;32mGenerating dependencies...\033[0m"
 	@$(RM) $@
-	@$(CC) $(CFLAGS) -MM $^ >> $@;
+	@$(CC) $(CFLAGS) -M $^ >> $@;
 
 include $(DEPENDENCIES)
 obj/%.o: src/%$(EXTENSION)
@@ -44,7 +44,9 @@ $(NAME): $(OBJ)
 
 clean:
 	@echo "\033[1;31mCleaning objects...\033[0m"
-	@$(RM) -r obj
+	@$(RM) -r obj/
+	@echo "\033[1;31mCleaning dependencies...\033[0m"
+	@$(RM) -r $(DEPENDENCIES)
 
 clean_gcovr:
 	@echo "\033[1;31mCleaning gcovr...\033[0m"

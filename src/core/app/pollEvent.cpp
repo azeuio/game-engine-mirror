@@ -7,6 +7,14 @@
 
 #include "core/App.hpp"
 
+void App::_keepViewConsitant(void)
+{
+    auto windowSize = sf::Vector2f(_window.getSize());
+
+    _camera.setSize(windowSize);
+    _display.setView(_camera);
+}
+
 bool App::pollEvent(CustomEvent &event)
 {
     bool result = _window.pollEvent(event);
@@ -24,11 +32,7 @@ bool App::pollEvent(CustomEvent &event)
             takeScreenshot();
     }
     if (event.type == sf::Event::Resized) {
-        sf::View view = _display.getView();
-        _width = event.size.width;
-        _height = event.size.height;
-        view.setSize((float)_width, (float)_height);
-        _display.setView(view);
+        _keepViewConsitant();
     }
     return true;
 }

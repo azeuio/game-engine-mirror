@@ -12,7 +12,7 @@
 class Demo : public App {
     public:
         using App::App;
-        void update(void) final;
+        void onUpdate(void) final;
 };
 
 void demo_1(void);
