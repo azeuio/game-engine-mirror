@@ -10,26 +10,30 @@
 #include <SFML/Window/Event.hpp>
 
 class CustomEvent : public sf::Event {
-    public:
+public:
+    struct PauseToggleEvent {
+        int desiredState; /// <0 = pause, >0 = unpause, 0 = toggle
+    };
+    CustomEvent(void) = default;
+    CustomEvent(sf::Event const &event) : sf::Event(event) {};
 
     ////////////////////////////////////////////////////////////
     /// \brief Enumeration of the different types of events
     ///
     ////////////////////////////////////////////////////////////
-    enum CustomEventType
+    enum class Type
     {
-        Count                   ///< Keep last -- the total number of event types
+        Pause,  ///< The window requested to be paused
+        Count   ///< Keep last -- the total number of event types
     };
 
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    EventType customType; ///< Type of the event
+    Type customType; ///< Type of the event
 
     // union of all the events struct
-    #if 0
-    // union
-    // {
-    // };
-    #endif
+    union {
+        PauseToggleEvent pauseToggle;
+    };
 };

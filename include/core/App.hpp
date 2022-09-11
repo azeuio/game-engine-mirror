@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "core/CustomEvent.hpp"
+#include "core/EventManager.hpp"
 #include "core/Camera.hpp"
 
 class App {
@@ -36,6 +37,8 @@ private:
         .screenshot = sf::Keyboard::Key::F12
     };
     Camera _camera;
+    EventManager _eventManager;
+
     void _keepViewConsitant(void);
 public:
     App(void) : _title("Game Engine"), _width(1080), _height(720) {}
