@@ -7,10 +7,9 @@
 
 #include <criterion/criterion.h>
 
-#include "tests/set_env_display.hpp"
 #include "tests/test_core/TestApp.hpp"
 
-#if (DISPLAY == 1)
+#ifdef DISPLAY
 Test(App, stop)
 {
     TestApp app;

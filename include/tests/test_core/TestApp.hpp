@@ -13,7 +13,7 @@ class TestApp : public App {
     public:
         using App::App;
 
-        void update(void) final {
+        void onUpdate(void) final {
             // Doesn't need to be implemented
         };
 

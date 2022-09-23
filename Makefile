@@ -91,24 +91,9 @@ tests_run: NAME = unit_tests
 tests_run: run_tests coverage
 
 ifneq (${DISPLAY},)
-run_tests: fclean
-	@printf "/*\n \
-	** EPITECH PROJECT, 2022\n \
-	** game-engine\n \
-	** File description:\n \
-	** set_env_display\n \
-	*/\n\n" > include/tests/set_env_display.hpp
-	@printf "#define DISPLAY 1\n" >> include/tests/set_env_display.hpp
-else
-run_tests: fclean
-	@printf "/*\n \
-	** EPITECH PROJECT, 2022\n \
-	** game-engine\n \
-	** File description:\n \
-	** set_env_display\n \
-	*/\n\n" > include/tests/set_env_display.hpp
-	@printf "#define DISPLAY 0\n" >> include/tests/set_env_display.hpp
+run_tests: CFLAGS += -DDISPLAY
 endif
+run_tests: fclean
 	@echo "\033[1;32mRunning tests...\033[0m"
 	@$(CC) $(shell find src -name "*$(EXTENSION)" -type f | \
 	grep -v main.cpp | grep -v src/demo) \
