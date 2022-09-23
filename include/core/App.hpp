@@ -26,8 +26,8 @@ private:
     bool _isRunning = true;
     bool _isPaused = false;
     std::string _title;
-    uint _width;
-    uint _height;
+    unsigned int _width;
+    unsigned int _height;
     sf::RenderWindow _window;
     sf::RenderTexture _display;
     sf::Color _clearColor = sf::Color::Black;
@@ -36,12 +36,13 @@ private:
         .fullscreen = sf::Keyboard::Key::F11,
         .screenshot = sf::Keyboard::Key::F12
     };
-    Camera _camera;
-    EventManager _eventManager;
+    sf::View _camera;
 
     void _keepViewConsitant(void);
 public:
-    App(void) : _title("Game Engine"), _width(1080), _height(720) {}
+    App(void) : _title("Game Engine"), _width(1080), _height(720) {
+        _display.create(_width, _height);
+    }
     explicit App(std::string const &title) : _title(title)
     {
         sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
@@ -62,7 +63,7 @@ public:
             sf::Vector2i(desktop.width / 4, desktop.height / 4));
         _window.setFramerateLimit(60);
     }
-    App(std::string const &title, uint width, uint height) :
+    App(std::string const &title, unsigned int width, unsigned int height) :
     _title(title), _width(width), _height(height)
     {
         _window.create(sf::VideoMode(width, height), _title);
@@ -74,8 +75,8 @@ public:
     bool isRunning(void) const { return _isRunning; }
     bool isPaused(void) const { return _isPaused; }
     bool isFullscreen(void) const { return _isFullscreen; }
-    uint getWidth(void) const { return _width; }
-    uint getHeight(void) const { return _height; }
+    unsigned int getWidth(void) const { return _width; }
+    unsigned int getHeight(void) const { return _height; }
     sf::RenderWindow &getWindow(void) { return _window; }
     sf::RenderTexture &getDisplay(void) { return _display; }
     sf::View &getCamera(void) { return _camera; }

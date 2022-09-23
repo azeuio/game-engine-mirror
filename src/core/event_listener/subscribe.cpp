@@ -16,6 +16,7 @@ bool isCustom)
 
     if (type == CustomEvent::Type::Count)
         return -1;
-    this->_listeners[(int)type].push_back(data);
+    printf("subscribing\n");
+    // this->_listeners[(int)type].push_back(data);
     return data.id;
 }

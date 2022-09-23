@@ -20,10 +20,10 @@ private:
         std::function<void(CustomEvent const &)> const& callback;
         bool isCustom;
     };
-    std::array<
-    std::vector<struct EventListenerData const&>,
-    ((int)CustomEvent::Count + (int)CustomEvent::Type::Count)
-    > _listeners;
+    // std::array<
+    // std::vector<struct EventListenerData const&>,
+    // ((int)CustomEvent::Count + (int)CustomEvent::Type::Count)
+    // > _listeners;
 public:
     void broadcast(CustomEvent const &event);
 

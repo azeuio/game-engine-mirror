@@ -26,8 +26,8 @@ Test(App, toggleFullscreen)
 Test(App, screen_size)
 {
     TestApp app;
-    uint width = app.getWidth();
-    uint height = app.getHeight();
+    unsigned int width = app.getWidth();
+    unsigned int height = app.getHeight();
 
     cr_assert_eq(width, 1080);
     cr_assert_eq(height, 720);
