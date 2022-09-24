@@ -12,7 +12,7 @@
 class CustomEvent : public sf::Event {
 public:
     struct PauseToggleEvent {
-        int desiredState; /// <0 = pause, >0 = unpause, 0 = toggle
+        bool isPaused;
     };
     CustomEvent(void) = default;
     CustomEvent(sf::Event const &event) : sf::Event(event) {};
@@ -30,7 +30,7 @@ public:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    Type customType; ///< Type of the event
+    Type customType = Type::Count; ///< Type of the event
 
     // union of all the events struct
     union {

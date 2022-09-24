@@ -44,6 +44,11 @@ public:
     std::vector<struct EventListenerData> &getListener(
     sf::Event::EventType type) { return _listeners.at((std::size_t)type); }
 
+    /**
+     * @brief Use callback function of every concerned listener of this
+     * particular event
+     * @param event Event to broadcast
+     */
     void broadcast(CustomEvent const &event);
 
     /**
