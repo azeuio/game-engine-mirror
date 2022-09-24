@@ -34,5 +34,14 @@ bool App::pollEvent(CustomEvent &event)
     if (event.type == sf::Event::Resized) {
         _keepViewConsitant();
     }
+    if (event.type != event.Count) {
+        for (EventManager::EventListenerData e : _eventManager.getListener(event.type)) {
+            e.callback(event);
+        }
+    } else if (event.customType != CustomEvent::Type::Count) {
+        for (EventManager::EventListenerData e : _eventManager.getListener(event.customType)) {
+            e.callback(event);
+        }
+    }
     return true;
 }

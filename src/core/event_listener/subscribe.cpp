@@ -7,16 +7,31 @@
 
 #include "core/EventManager.hpp"
 
-int EventManager::subscribe(CustomEvent::Type type,
-std::function<void(CustomEvent const &)> const& callback,
-bool isCustom)
-{
-    static unsigned int id = 0;
-    struct EventListenerData data = {id, callback, isCustom};
+static unsigned int id;
 
+int EventManager::subscribe(CustomEvent::Type type,
+std::function<void (const CustomEvent &)> callback)
+{
+    struct EventListenerData data = {
+        id, callback, true};
+    static std::size_t nbSfEventType = sf::Event::Count;
+
+    id++;
     if (type == CustomEvent::Type::Count)
         return -1;
-    printf("subscribing\n");
-    // this->_listeners[(int)type].push_back(data);
+    this->_listeners.at((std::size_t)type + nbSfEventType).push_back(data);
+    return data.id;
+}
+
+int EventManager::subscribe(sf::Event::EventType type,
+std::function<void (const CustomEvent &)> callback)
+{
+    struct EventListenerData data = {
+        id, callback, false};
+
+    id++;
+    if (type == sf::Event::EventType::Count)
+        return -1;
+    this->_listeners.at((std::size_t)type).push_back(data);
     return data.id;
 }

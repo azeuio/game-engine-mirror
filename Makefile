@@ -19,7 +19,7 @@ SRC	=	$(shell find src -name "*$(EXTENSION)" -type f)
 
 OBJ	=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC))
 
-CFLAGS	=	-Wall -Wextra -Werror -Iinclude -O3
+CFLAGS	=	-Wall -Wextra -Iinclude -O3
 
 LDFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
 
@@ -33,16 +33,15 @@ CFLAGS	+=	-DWINDOWS
 ECHO	=	echo -e
 NAME	:=	$(NAME:.out=.exe)
 
-all: $(DEPENDENCIES) $(NAME)
-
 else
 DEPENDENCIES	=	dependencies.unix.d
 CFLAGS	+=	-DLINUX
 ECHO	=	echo
 NAME	:=	$(NAME:.exe=.out)
 
-all: $(DEPENDENCIES) $(NAME)
 endif
+
+all: $(DEPENDENCIES) $(NAME)
 
 $(DEPENDENCIES): $(SRC)
 	@$(ECHO) "\033[1;32mGenerating dependencies...\033[0m"

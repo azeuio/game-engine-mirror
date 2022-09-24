@@ -37,6 +37,7 @@ private:
         .screenshot = sf::Keyboard::Key::F12
     };
     sf::View _camera;
+    EventManager _eventManager;
 
     void _keepViewConsitant(void);
 public:
@@ -80,6 +81,7 @@ public:
     sf::RenderWindow &getWindow(void) { return _window; }
     sf::RenderTexture &getDisplay(void) { return _display; }
     sf::View &getCamera(void) { return _camera; }
+    EventManager &getEventManager(void) { return _eventManager; }
 
     void setClearColor(sf::Color const &color) { _clearColor = color; }
 

@@ -14,30 +14,58 @@
 #include "core/CustomEvent.hpp"
 
 class EventManager {
-private:
+public:
     struct EventListenerData {
         unsigned int id;
-        std::function<void(CustomEvent const &)> const& callback;
+        std::function<void (const CustomEvent &)> callback;
         bool isCustom;
     };
-    // std::array<
-    // std::vector<struct EventListenerData const&>,
-    // ((int)CustomEvent::Count + (int)CustomEvent::Type::Count)
-    // > _listeners;
+private:
+    std::vector<
+    std::vector<struct EventListenerData>> _listeners;
 public:
+    EventManager(void) {
+        int nbListenerType = (
+        (int)CustomEvent::Type::Count + (int)sf::Event::Count + 2);
+
+        for (int i = 0; i < nbListenerType; i++) {
+            _listeners.push_back(
+            std::vector<EventManager::EventListenerData>()
+            );
+        }
+    }
+    std::vector<struct EventListenerData> &getListener(
+    CustomEvent::Type type)
+    {
+        static std::size_t nbSfEvent = (std::size_t)sf::Event::Count;
+
+        return _listeners[nbSfEvent + (std::size_t)type];
+    }
+    std::vector<struct EventListenerData> &getListener(
+    sf::Event::EventType type) { return _listeners.at((std::size_t)type); }
+
     void broadcast(CustomEvent const &event);
 
-
     /**
-     * @brief Makes `manager` call `onEvent` when `event` is broadcasted.
+     * @brief Adds callback to the list of function called when `event` is
+     * broadcasted.
      * @param type The type of the event to listen to.
      * @param callback The callback to call when the event is broadcasted.
      * @param isCustom Whether the event is a custom event or a sfml event.
      * @return index of the listener in the list of listeners
      */
     int subscribe(CustomEvent::Type type,
-    std::function<void(CustomEvent const &)> const& callback,
-    bool isCustom = false);
+    std::function<void (const CustomEvent &)> callback);
+    /**
+     * @brief Adds callback to the list of function called when `event` is
+     * broadcasted.
+     * @param type The type of the event to listen to.
+     * @param callback The callback to call when the event is broadcasted.
+     * @param isCustom Whether the event is a custom event or a sfml event.
+     * @return index of the listener in the list of listeners
+     */
+    int subscribe(sf::Event::EventType type,
+    std::function<void (const CustomEvent &)> callback);
 
     /**
      * @brief Makes `manager` stop calling `onEvent` when `event`
