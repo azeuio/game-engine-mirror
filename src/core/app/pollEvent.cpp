@@ -8,14 +8,6 @@
 #include "core/App.hpp"
 #include "core/keybindings.hpp"
 
-void App::_keepViewConsitant(void)
-{
-    auto windowSize = sf::Vector2f(_window.getSize());
-
-    _camera.setSize(windowSize);
-    _display.setView(_camera);
-}
-
 static bool compareEqKeyEvent(sf::Event::KeyEvent eventA,
 sf::Event::KeyEvent eventB)
 {
@@ -43,7 +35,6 @@ bool App::pollEvent(CustomEvent &event)
         for (std::size_t i = 0; i < (std::size_t)KeybindingsAction::COUNT; i++)
         {
             if (compareEqKeyEvent(event.key, KEYBINDINGS[i].keyCombination)) {
-                printf("broadcasting %d\n", i);
                 event.customType = KEYBINDINGS[i].customType;
                 event.type = sf::Event::Count;
                 _eventManager.broadcast(event);

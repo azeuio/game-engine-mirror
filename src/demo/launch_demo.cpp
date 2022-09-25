@@ -13,7 +13,7 @@
 
 int launchDemo(void)
 {
-    Demo app("SFML works!");
+    Demo app;
     CustomEvent event;
     sf::CircleShape circle(100.f);
     EventManager &manager = app.getEventManager();
@@ -21,7 +21,7 @@ int launchDemo(void)
     manager.subscribe(CustomEvent::EventType::Resized,
     [&](const CustomEvent &) { printf("resized\n"); });
     manager.subscribe(CustomEvent::Type::Pause,
-    [](const CustomEvent &){ 
+    [](const CustomEvent &){
         static int a;
         printf("paused a %d\n", a++); });
 

@@ -19,7 +19,7 @@ SRC	=	$(shell find src -name "*$(EXTENSION)" -type f)
 
 OBJ	=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC))
 
-CFLAGS	=	-Wall -Wextra -Iinclude -O3
+CFLAGS	=	-std=c++2a -Wall -Wextra -Wshadow -Wpedantic -Iinclude -O3
 
 LDFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
 

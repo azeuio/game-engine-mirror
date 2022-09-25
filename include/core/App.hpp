@@ -40,37 +40,21 @@ private:
     EventManager _eventManager;
 
     void _keepViewConsitant(void);
+    /**
+     * @brief Called by the constructor of the class.
+     * should not be directly called
+     */
+    void _init(void);
+protected:
+    /**
+     * @brief Called when an instance is created.
+     * This function is made to be overwritten
+     */
+    void onInit(void) {};
 public:
-    App(void) : _title("Game Engine"), _width(1080), _height(720) {
-        _display.create(_width, _height);
-    }
-    explicit App(std::string const &title) : _title(title)
-    {
-        sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-        sf::View view;
-
-        _width = desktop.width / 2;
-        _height = desktop.height / 2;
-        // makes sure the display is at the same resolution as the screen
-        _display.create(desktop.width, desktop.height);
-        _camera = Camera(_display.getView());
-        // makes sure the display is centered on the window
-        _camera.setViewport(sf::FloatRect(0, 0, 1 / 2.f, 1 / 2.f));
-        _camera.setSize((float)_width, (float)_height);
-        _camera.setCenter(0, 0);
-        _display.setView(_camera);
-        _window.create(sf::VideoMode(_width, _height), _title);
-        _window.setPosition(
-            sf::Vector2i(desktop.width / 4, desktop.height / 4));
-        _window.setFramerateLimit(60);
-    }
-    App(std::string const &title, unsigned int width, unsigned int height) :
-    _title(title), _width(width), _height(height)
-    {
-        _window.create(sf::VideoMode(width, height), _title);
-        _window.setFramerateLimit(60);
-        _display.create(width, height);
-    };
+    App(void);
+    explicit App(std::string const &title);
+    App(std::string const &title, unsigned int width, unsigned int height);
     virtual ~App() = default;
 
     bool isRunning(void) const { return _isRunning; }
