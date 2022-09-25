@@ -52,7 +52,6 @@ protected:
      */
     void onInit(void) {};
 public:
-    App(void);
     explicit App(std::string const &title);
     App(std::string const &title, unsigned int width, unsigned int height);
     virtual ~App() = default;

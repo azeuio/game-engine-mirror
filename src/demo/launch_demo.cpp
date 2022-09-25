@@ -13,7 +13,7 @@
 
 int launchDemo(void)
 {
-    Demo app;
+    Demo app("My game");
     CustomEvent event;
     sf::CircleShape circle(100.f);
     EventManager &manager = app.getEventManager();
