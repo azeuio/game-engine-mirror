@@ -13,7 +13,6 @@
 
 #include "core/CustomEvent.hpp"
 #include "core/EventManager.hpp"
-#include "core/Camera.hpp"
 
 class App {
 public:
@@ -56,7 +55,9 @@ protected:
      * @brief Called when an instance is created.
      * This function is made to be overwritten
      */
-    void onInit(void) {};
+    void onInit(void) {
+        // Made to be overridden
+    };
 public:
     explicit App(std::string const &title);
     App(std::string const &title, unsigned int width, unsigned int height);
