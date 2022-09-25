@@ -29,9 +29,7 @@ public:
         (int)CustomEvent::Type::Count + (int)sf::Event::Count + 2);
 
         for (int i = 0; i < nbListenerType; i++) {
-            _listeners.emplace_back(
-                std::vector<EventManager::EventListenerData>()
-            );
+            _listeners.emplace_back();
         }
     }
     std::vector<struct EventListenerData> &getListener(
