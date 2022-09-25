@@ -30,7 +30,7 @@ public:
 
         for (int i = 0; i < nbListenerType; i++) {
             _listeners.emplace_back(
-            std::vector<EventManager::EventListenerData>()
+                std::vector<EventManager::EventListenerData>()
             );
         }
     }

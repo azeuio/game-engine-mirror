@@ -1,1 +1,1 @@
-# game-engine
+# game-engine [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=azeuio_game-engine-mirror&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=azeuio_game-engine-mirror)
