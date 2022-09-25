@@ -29,32 +29,33 @@ bool App::pollEvent(CustomEvent &event)
     if (event.type == sf::Event::Closed)
         stop();
     if (event.type == sf::Event::KeyPressed) {
-        // if (compareEqKeyEvent(event.key, KEYBINDINGS[0].keyCombination)) {
-        //     printf("pa\n");
-        // }
+        printf("press %d\n", (int)event.key.code);
         for (std::size_t i = 0; i < (std::size_t)KeybindingsAction::COUNT; i++)
         {
-            if (compareEqKeyEvent(event.key, KEYBINDINGS[i].keyCombination)) {
+            if (!KEYBINDINGS[i].activeOnKeyPress) continue;
+            if (compareEqKeyEvent(event.key, KEYBINDINGS[i].keyCombination)
+            || compareEqKeyEvent(event.key, KEYBINDINGS[i].altKeyCombination))
+            {
                 event.customType = KEYBINDINGS[i].customType;
                 event.type = sf::Event::Count;
                 _eventManager.broadcast(event);
             }
         }
-        
-        // if (event.key.code == keybindings.pause) {
-        //     _isPaused = !_isPaused;
-        //     event.customType = CustomEvent::Type::Pause;
-        //     event.pauseToggle.isPaused = _isPaused;
-        // }
-        // if (event.key.code == keybindings.fullscreen)
-        //     toggleFullscreen();
-        // if (event.key.code == keybindings.screenshot)
-        //     takeScreenshot();
+    } else if (event.type == sf::Event::KeyReleased) {
+        printf("release %d\n", (int)event.key.code);
+        for (std::size_t i = 0; i < (std::size_t)KeybindingsAction::COUNT; i++)
+        {
+            if (KEYBINDINGS[i].activeOnKeyPress) continue;
+            if (compareEqKeyEvent(event.key, KEYBINDINGS[i].keyCombination)
+            || compareEqKeyEvent(event.key, KEYBINDINGS[i].altKeyCombination))
+            {
+                event.customType = KEYBINDINGS[i].customType;
+                event.type = sf::Event::Count;
+                _eventManager.broadcast(event);
+            }
+        }
     } else {
         _eventManager.broadcast(event);
-    }
-    if (event.type == sf::Event::Resized) {
-        _keepViewConsitant();
     }
     return true;
 }

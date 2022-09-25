@@ -48,10 +48,11 @@ struct KeyCombination {
 struct KeyBinding {
     sf::Event::KeyEvent keyCombination;
     sf::Event::KeyEvent altKeyCombination;
-    unsigned int joystickButton;
+    int joystickButton;
     bool isCustomEvent;
     CustomEvent::Type customType = CustomEvent::Type::Count;
     sf::Event::EventType sfType = sf::Event::Count;
+    bool activeOnKeyPress = true;
 };
 
 sf::Event::KeyEvent newKeyEvent(
@@ -73,10 +74,27 @@ sf::Event::KeyEvent newKeyEvent(
 
 // struct KeyBinding KEYBINDINGS[(int)KeybindingsAction::COUNT] = {
 std::array<struct KeyBinding, (int)KeybindingsAction::COUNT> KEYBINDINGS = {
-    // Pause
-    (struct KeyBinding){
-        .keyCombination = newKeyEvent(sf::Keyboard::P),
-        .altKeyCombination = newKeyEvent(sf::Keyboard::Escape),
+    // SCREENSHOT
+    (struct KeyBinding) {
+        .keyCombination = newKeyEvent(sf::Keyboard::F2),
+        .altKeyCombination = newKeyEvent(sf::Keyboard::F2),
+        .joystickButton = -1,
+        .isCustomEvent = true,
+        .customType = CustomEvent::Type::Screenshot
+    },
+    // FULLSCREEN
+    (struct KeyBinding) {
+        .keyCombination = newKeyEvent(sf::Keyboard::F11),
+        .altKeyCombination = newKeyEvent(sf::Keyboard::F2),
+        .joystickButton = -1,
+        .isCustomEvent = true,
+        .customType = CustomEvent::Type::Fullscreen,
+        .activeOnKeyPress = false
+    },
+    // PAUSE
+    (struct KeyBinding) {
+        .keyCombination = newKeyEvent(sf::Keyboard::Escape),
+        .altKeyCombination = newKeyEvent(sf::Keyboard::P),
         .joystickButton = 1,
         .isCustomEvent = true,
         .customType = CustomEvent::Type::Pause

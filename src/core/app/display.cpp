@@ -12,6 +12,7 @@ void App::display(void)
     sf::Texture texture;
     sf::Sprite sprite;
 
+    _currentFrame++;
     _display.display();
     texture = _display.getTexture();
     sprite.setTexture(texture);

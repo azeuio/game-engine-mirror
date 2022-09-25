@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <stdint.h>
 #include <string>
 #include <SFML/Graphics.hpp>
 
@@ -38,6 +39,8 @@ private:
     };
     sf::View _camera;
     EventManager _eventManager;
+    unsigned int _fps = 60u;
+    unsigned long _currentFrame = 0ul;
 
     void _keepViewConsitant(void);
     /**
@@ -45,6 +48,9 @@ private:
      * should not be directly called
      */
     void _init(void);
+    void _setupDefaultEventListeners(void);
+    void _recreateWindow(unsigned int width, unsigned int height,
+    sf::Uint32 style = 7U);
 protected:
     /**
      * @brief Called when an instance is created.
@@ -65,8 +71,15 @@ public:
     sf::RenderTexture &getDisplay(void) { return _display; }
     sf::View &getCamera(void) { return _camera; }
     EventManager &getEventManager(void) { return _eventManager; }
+    unsigned int getFPS(void) const { return _fps; }
+    unsigned long getCurrentFrame(void) const { return _currentFrame; }
 
+    void setTitle(std::string const &title) {
+        _title = title;
+        _window.setTitle(title);
+    }
     void setClearColor(sf::Color const &color) { _clearColor = color; }
+    void setFPS(uint8_t fps) { _fps = fps; _window.setFramerateLimit(fps); }
 
     void stop(void);
     void toggleFullscreen(void);
@@ -98,4 +111,7 @@ public:
     */
     void draw(void);
     void display(void);
+
+    /** Centers the window on screen */
+    void centerWindow(void);
 };
