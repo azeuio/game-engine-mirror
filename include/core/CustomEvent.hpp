@@ -20,7 +20,7 @@ public:
     };
 
     CustomEvent(void) = default;
-    CustomEvent(sf::Event const &event) : sf::Event(event) {};
+    explicit CustomEvent(sf::Event const &event) : sf::Event(event) {};
 
     ////////////////////////////////////////////////////////////
     /// \brief Enumeration of the different types of events

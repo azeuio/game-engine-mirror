@@ -21,7 +21,7 @@ int launchDemo(void)
 
     while (app.getWindow().pollEvent(event));
     manager.subscribe(CustomEvent::EventType::Resized,
-    [&](const CustomEvent &) { printf("resized\n"); });
+    [](const CustomEvent &) { printf("resized\n"); });
     manager.subscribe(CustomEvent::Type::Pause,
     [](const CustomEvent &){
         static int a;

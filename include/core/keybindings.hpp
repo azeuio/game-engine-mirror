@@ -73,7 +73,8 @@ sf::Event::KeyEvent newKeyEvent(
 }
 
 // struct KeyBinding KEYBINDINGS[(int)KeybindingsAction::COUNT] = {
-std::array<struct KeyBinding, (int)KeybindingsAction::COUNT> KEYBINDINGS = {
+const std::array<struct KeyBinding, (int)KeybindingsAction::COUNT>
+KEYBINDINGS = {
     // SCREENSHOT
     (struct KeyBinding) {
         .keyCombination = newKeyEvent(sf::Keyboard::F2),
