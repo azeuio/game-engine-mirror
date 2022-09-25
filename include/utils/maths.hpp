@@ -7,8 +7,7 @@
 
 #pragma once
 
-namespace utils {
-namespace math {
+namespace utils::maths {
 template <typename T>
 static inline T max(T a, T b) { return (a > b) ? a : b; }
 
@@ -17,5 +16,4 @@ static T min(T a, T b) { return (a < b) ? a : b; }
 
 template <typename T>
 static inline T abs(T a) { return (a < 0) ? -a : a; }
-} // namespace math
-} // namespace utils
+} // namespace utils::math

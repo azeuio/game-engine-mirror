@@ -39,7 +39,7 @@ private:
     sf::View _camera;
     EventManager _eventManager;
     unsigned int _fps = 60u;
-    unsigned long _currentFrame = 0ul;
+    unsigned long _currentFrame = 0UL;
 
     void _keepViewConsitant(void);
     /**

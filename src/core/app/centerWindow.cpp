@@ -8,7 +8,7 @@
 #include "core/App.hpp"
 #include "utils/maths.hpp"
 
-using namespace utils::math;
+using namespace utils::maths;
 
 void App::centerWindow(void)
 {
