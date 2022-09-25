@@ -6,6 +6,19 @@
 */
 
 #include "core/App.hpp"
+#include "core/keybindings.hpp"
+
+static bool compareEqKeyEvent(sf::Event::KeyEvent eventA,
+sf::Event::KeyEvent eventB)
+{
+    return (
+        eventA.code == eventB.code &&
+        eventA.control == eventB.control &&
+        eventA.alt == eventB.alt &&
+        eventA.shift == eventB.shift &&
+        eventA.system == eventB.system
+    );
+}
 
 bool App::pollEvent(CustomEvent &event)
 {
@@ -16,19 +29,33 @@ bool App::pollEvent(CustomEvent &event)
     if (event.type == sf::Event::Closed)
         stop();
     if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == keybindings.pause)
-            _isPaused = !_isPaused;
-        if (event.key.code == keybindings.fullscreen)
-            toggleFullscreen();
-        if (event.key.code == keybindings.screenshot)
-            takeScreenshot();
-    }
-    if (event.type == sf::Event::Resized) {
-        sf::View view = _display.getView();
-        _width = event.size.width;
-        _height = event.size.height;
-        view.setSize((float)_width, (float)_height);
-        _display.setView(view);
+        printf("press %d\n", (int)event.key.code);
+        for (std::size_t i = 0; i < (std::size_t)KeybindingsAction::COUNT; i++)
+        {
+            if (!KEYBINDINGS[i].activeOnKeyPress) continue;
+            if (compareEqKeyEvent(event.key, KEYBINDINGS[i].keyCombination)
+            || compareEqKeyEvent(event.key, KEYBINDINGS[i].altKeyCombination))
+            {
+                event.customType = KEYBINDINGS[i].customType;
+                event.type = sf::Event::Count;
+                _eventManager.broadcast(event);
+            }
+        }
+    } else if (event.type == sf::Event::KeyReleased) {
+        printf("release %d\n", (int)event.key.code);
+        for (std::size_t i = 0; i < (std::size_t)KeybindingsAction::COUNT; i++)
+        {
+            if (KEYBINDINGS[i].activeOnKeyPress) continue;
+            if (compareEqKeyEvent(event.key, KEYBINDINGS[i].keyCombination)
+            || compareEqKeyEvent(event.key, KEYBINDINGS[i].altKeyCombination))
+            {
+                event.customType = KEYBINDINGS[i].customType;
+                event.type = sf::Event::Count;
+                _eventManager.broadcast(event);
+            }
+        }
+    } else {
+        _eventManager.broadcast(event);
     }
     return true;
 }

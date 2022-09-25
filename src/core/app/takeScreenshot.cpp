@@ -41,6 +41,10 @@ void App::takeScreenshot(void) const
     texture.create(size.x, size.y);
     texture.update(_window);
     image = texture.copyToImage();
+#ifdef LINUX
     mkdir("screenshots", 0777);
+#else
+    mkdir("screenshots");
+#endif
     image.saveToFile(GetNextAvailableFilename("./screenshots/screenshot.png"));
 }

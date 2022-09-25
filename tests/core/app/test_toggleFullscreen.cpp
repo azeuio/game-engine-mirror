@@ -7,10 +7,10 @@
 
 #include <criterion/criterion.h>
 
-#include "tests/set_env_display.hpp"
 #include "tests/test_core/TestApp.hpp"
 
-#if (DISPLAY == 1)
+#ifdef DISPLAY
+
 Test(App, toggleFullscreen)
 {
     TestApp app;
@@ -26,8 +26,8 @@ Test(App, toggleFullscreen)
 Test(App, screen_size)
 {
     TestApp app;
-    uint width = app.getWidth();
-    uint height = app.getHeight();
+    unsigned int width = app.getWidth();
+    unsigned int height = app.getHeight();
 
     cr_assert_eq(width, 1080);
     cr_assert_eq(height, 720);

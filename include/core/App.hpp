@@ -7,79 +7,111 @@
 
 #pragma once
 
+#include <stdint.h>
 #include <string>
 #include <SFML/Graphics.hpp>
 
 #include "core/CustomEvent.hpp"
+#include "core/EventManager.hpp"
+#include "core/Camera.hpp"
 
 class App {
-    public:
-        struct keybindings {
-            sf::Keyboard::Key pause;
-            sf::Keyboard::Key fullscreen;
-            sf::Keyboard::Key screenshot;
-        };
-    private:
-        bool _isFullscreen = false;
-        bool _isRunning = true;
-        bool _isPaused = false;
-        std::string _title;
-        uint _width;
-        uint _height;
-        sf::RenderWindow _window;
-        sf::RenderTexture _display;
-        sf::Color _clearColor = sf::Color::Black;
-        struct keybindings keybindings = {
-            .pause = sf::Keyboard::Key::Escape,
-            .fullscreen = sf::Keyboard::Key::F11,
-            .screenshot = sf::Keyboard::Key::F12
-        };
-    public:
-        App(void) : _title("Game Engine"), _width(1080), _height(720) {
-            _display.create(_width, _height);
-        }
-        App(std::string const &title, uint width, uint height) :
-        _title(title), _width(width), _height(height)
-        {
-            _window.create(sf::VideoMode(width, height), _title);
-            _window.setFramerateLimit(60);
-            _display.create(width, height);
-        };
-        virtual ~App() = default;
+public:
+    struct keybindings {
+        sf::Keyboard::Key pause;
+        sf::Keyboard::Key fullscreen;
+        sf::Keyboard::Key screenshot;
+    };
+private:
+    bool _isFullscreen = false;
+    bool _isRunning = true;
+    bool _isPaused = false;
+    std::string _title;
+    unsigned int _width;
+    unsigned int _height;
+    sf::RenderWindow _window;
+    sf::RenderTexture _display;
+    sf::Color _clearColor = sf::Color::Black;
+    struct keybindings keybindings = {
+        .pause = sf::Keyboard::Key::Escape,
+        .fullscreen = sf::Keyboard::Key::F11,
+        .screenshot = sf::Keyboard::Key::F12
+    };
+    sf::View _camera;
+    EventManager _eventManager;
+    unsigned int _fps = 60u;
+    unsigned long _currentFrame = 0ul;
 
-        bool isRunning(void) const { return _isRunning; }
-        bool isPaused(void) const { return _isPaused; }
-        bool isFullscreen(void) const { return _isFullscreen; }
-        uint getWidth(void) const { return _width; }
-        uint getHeight(void) const { return _height; }
-        sf::RenderWindow &getWindow(void) { return _window; }
-        sf::RenderTexture &getDisplay(void) { return _display; }
-        sf::View const &getView(void) const { return _display.getView(); }
+    void _keepViewConsitant(void);
+    /**
+     * @brief Called by the constructor of the class.
+     * should not be directly called
+     */
+    void _init(void);
+    void _setupDefaultEventListeners(void);
+    void _recreateWindow(unsigned int width, unsigned int height,
+    sf::Uint32 style = 7U);
+protected:
+    /**
+     * @brief Called when an instance is created.
+     * This function is made to be overwritten
+     */
+    void onInit(void) {};
+public:
+    explicit App(std::string const &title);
+    App(std::string const &title, unsigned int width, unsigned int height);
+    virtual ~App() = default;
 
-        void setClearColor(sf::Color const &color) { _clearColor = color; }
+    bool isRunning(void) const { return _isRunning; }
+    bool isPaused(void) const { return _isPaused; }
+    bool isFullscreen(void) const { return _isFullscreen; }
+    unsigned int getWidth(void) const { return _width; }
+    unsigned int getHeight(void) const { return _height; }
+    sf::RenderWindow &getWindow(void) { return _window; }
+    sf::RenderTexture &getDisplay(void) { return _display; }
+    sf::View &getCamera(void) { return _camera; }
+    EventManager &getEventManager(void) { return _eventManager; }
+    unsigned int getFPS(void) const { return _fps; }
+    unsigned long getCurrentFrame(void) const { return _currentFrame; }
 
-        void stop(void);
-        void toggleFullscreen(void);
-        /*
-        \brief Takes a screenshot of the current window and saves it in the
-        screenshots/ folder
-        */
-        void takeScreenshot(void) const;
-        virtual void update(void) = 0;
-        /*
-        \brief Polls for events and returns true if an event was polled
+    void setTitle(std::string const &title) {
+        _title = title;
+        _window.setTitle(title);
+    }
+    void setClearColor(sf::Color const &color) { _clearColor = color; }
+    void setFPS(uint8_t fps) { _fps = fps; _window.setFramerateLimit(fps); }
 
-        Also handles the pause, fullscreen and screenshot keybindings
-        */
-        bool pollEvent(CustomEvent &event);
-        /*
-        \brief Draws the drawable on the window
-        */
-        void draw(sf::Drawable const &drawable);
-        /*
-        \brief Clear the window with clear color, then draws all the drawable
-        objects
-        */
-        void draw(void);
-        void display(void);
+    void stop(void);
+    void toggleFullscreen(void);
+    /*
+    \brief Takes a screenshot of the current window and saves it in the
+    screenshots/ folder
+    */
+    void takeScreenshot(void) const;
+    /** @brief Updates the window and calls onUpdate()
+     */
+    void update(void) {
+        _display.setView(_camera);
+        onUpdate();
+    };
+    virtual void onUpdate(void) = 0;
+    /*
+    \brief Polls for events and returns true if an event was polled
+
+    Also handles the pause, fullscreen and screenshot keybindings
+    */
+    bool pollEvent(CustomEvent &event);
+    /*
+    \brief Draws the drawable on the window
+    */
+    void draw(sf::Drawable const &drawable);
+    /*
+    \brief Clear the window with clear color, then draws all the drawable
+    objects
+    */
+    void draw(void);
+    void display(void);
+
+    /** Centers the window on screen */
+    void centerWindow(void);
 };
