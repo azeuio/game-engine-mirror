@@ -7,9 +7,10 @@
 
 #include <functional>
 
+#include "core/EventManager.hpp"
 #include "demo/startDemo.hpp"
 #include "demo/Demo.hpp"
-#include "core/EventManager.hpp"
+#include "demo/BugWalker.hpp"
 
 #include <string>
 int launchDemo(void)
@@ -18,8 +19,8 @@ int launchDemo(void)
     CustomEvent event;
     sf::CircleShape circle(100.f);
     EventManager &manager = app.getEventManager();
+    BugWalker bug;
 
-    while (app.getWindow().pollEvent(event));
     manager.subscribe(CustomEvent::EventType::Resized,
     [](const CustomEvent &) { printf("resized\n"); });
     manager.subscribe(CustomEvent::Type::Pause,
@@ -31,7 +32,10 @@ int launchDemo(void)
     circle.setFillColor(sf::Color::Green);
     app.setClearColor(sf::Color::Red);
     int a = 0;
+    bug.setScale(5, 5);
     while (app.isRunning()) {
+        app.getCamera().move(0.1F, 0.F);
+        bug.move(1.f, 1.f);
         if ((app.getCurrentFrame() % app.getFPS()) == 0) {
             app.setTitle(std::string(&"hello"[a++ % 5]));
         }
@@ -41,6 +45,7 @@ int launchDemo(void)
         app.update();
         app.draw();
         app.draw(circle);
+        app.draw(bug);
         app.display();
     }
     return 0;
