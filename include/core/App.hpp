@@ -55,7 +55,7 @@ protected:
      * @brief Called when an instance is created.
      * This function is made to be overwritten
      */
-    void onInit(void) {
+    virtual void onInit(void) {
         // Made to be overridden
     };
 public:
@@ -80,7 +80,7 @@ public:
         _window.setTitle(title);
     }
     void setClearColor(sf::Color const &color) { _clearColor = color; }
-    void setFPS(uint8_t fps) { _fps = fps; _window.setFramerateLimit(fps); }
+    void setFPS(uint32_t fps) { _fps = fps; _window.setFramerateLimit(fps); }
 
     void stop(void);
     void toggleFullscreen(void);

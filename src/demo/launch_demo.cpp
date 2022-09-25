@@ -25,9 +25,8 @@ int launchDemo(void)
     manager.subscribe(CustomEvent::Type::Pause,
     [](const CustomEvent &){
         static int a;
-        printf("paused a %d\n", a++); });
-
-    // app.toggleFullscreen();
+        printf("paused a %d\n", a++);
+    });
     circle.setOrigin(circle.getRadius(), circle.getRadius());
     circle.setFillColor(sf::Color::Green);
     app.setClearColor(sf::Color::Red);

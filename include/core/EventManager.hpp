@@ -29,7 +29,7 @@ public:
         (int)CustomEvent::Type::Count + (int)sf::Event::Count + 2);
 
         for (int i = 0; i < nbListenerType; i++) {
-            _listeners.push_back(
+            _listeners.emplace_back(
             std::vector<EventManager::EventListenerData>()
             );
         }
@@ -37,7 +37,7 @@ public:
     std::vector<struct EventListenerData> &getListener(
     CustomEvent::Type type)
     {
-        static std::size_t nbSfEvent = (std::size_t)sf::Event::Count;
+        static std::size_t nbSfEvent = sf::Event::Count;
 
         return _listeners[nbSfEvent + (std::size_t)type];
     }
@@ -60,7 +60,7 @@ public:
      * @return index of the listener in the list of listeners
      */
     int subscribe(CustomEvent::Type type,
-    std::function<void (const CustomEvent &)> callback);
+    std::function<void (const CustomEvent &)> const& callback);
     /**
      * @brief Adds callback to the list of function called when `event` is
      * broadcasted.
@@ -70,7 +70,7 @@ public:
      * @return index of the listener in the list of listeners
      */
     int subscribe(sf::Event::EventType type,
-    std::function<void (const CustomEvent &)> callback);
+    std::function<void (const CustomEvent &)> const& callback);
 
     /**
      * @brief Makes `manager` stop calling `onEvent` when `event`

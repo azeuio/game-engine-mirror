@@ -9,7 +9,7 @@
 
 void App::_keepViewConsitant(void)
 {
-    sf::Vector2f windowSize = sf::Vector2f(_window.getSize());
+    sf::Vector2f windowSize(_window.getSize());
 
     _camera.setSize(windowSize);
     _display.setView(_camera);

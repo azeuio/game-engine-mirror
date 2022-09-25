@@ -14,7 +14,7 @@ void App::_init()
 {
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     sf::View view;
-    sf::Vector2f halfSize(_width / 2.f, _height / 2.f);
+    sf::Vector2f halfSize((float)_width / 2.f, (float)_height / 2.f);
 
     _recreateWindow(_width, _height);
     centerWindow();

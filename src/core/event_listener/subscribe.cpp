@@ -10,7 +10,7 @@
 static unsigned int id;
 
 int EventManager::subscribe(CustomEvent::Type type,
-std::function<void (const CustomEvent &)> callback)
+std::function<void (const CustomEvent &)> const& callback)
 {
     struct EventListenerData data = {
         id, callback, true};
@@ -24,7 +24,7 @@ std::function<void (const CustomEvent &)> callback)
 }
 
 int EventManager::subscribe(sf::Event::EventType type,
-std::function<void (const CustomEvent &)> callback)
+std::function<void (const CustomEvent &)> const& callback)
 {
     struct EventListenerData data = {
         id, callback, false};

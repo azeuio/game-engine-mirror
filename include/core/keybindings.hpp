@@ -26,7 +26,7 @@ enum class KeybindingsAction {
     CROUCH,
     TOGGLE_INVENTORY,
     INTERACT,
-    CONFIRM = INTERACT, /// Alias for INTERACT
+    CONFIRM,
     RETURN,
     NEXT_ELEMENT,
     SKIP,
@@ -100,6 +100,7 @@ KEYBINDINGS = {
         .isCustomEvent = true,
         .customType = CustomEvent::Type::Pause
     }
+};
     // // UP
     // {
     //     {sf::Keyboard::W, false, false, false},
@@ -202,4 +203,4 @@ KEYBINDINGS = {
     //     {sf::Keyboard::P, false, false, false},
     //     (unsigned int)sf::Joystick::ButtonCount
     // }
-};
+// };
