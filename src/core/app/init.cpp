@@ -21,7 +21,7 @@ void App::_init()
     _display.create(
         max(desktop.width, _width),
         max(desktop.height, _height));
-    _camera = sf::View(_display.getView());;
+    _camera = sf::View(_display.getView());
     _camera.setCenter(0, 0);
     _display.setView(_camera);
     _keepViewConsitant();

@@ -7,7 +7,7 @@
 
 #include "core/App.hpp"
 
-typedef const CustomEvent & Event_t;
+using Event_t = const CustomEvent &;
 
 void App::_setupDefaultEventListeners(void)
 {
