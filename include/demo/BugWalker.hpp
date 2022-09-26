@@ -12,9 +12,10 @@
 class BugWalker : public Entity {
 public:
     BugWalker() {
-        sf::Texture *texture = new sf::Texture;
+        sf::Texture *texture = new sf::Texture();
 
         texture->loadFromFile("assets/demo/bug_walker.png");
-        _sprite.setTexture(*texture, true);
+        _sprite = AnimatedSprite();
+        _sprite.setSpriteSheet(*texture);
     }
 };

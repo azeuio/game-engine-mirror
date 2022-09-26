@@ -72,34 +72,58 @@ sf::Event::KeyEvent newKeyEvent(
     };
 }
 
-// struct KeyBinding KEYBINDINGS[(int)KeybindingsAction::COUNT] = {
-const std::array<struct KeyBinding, (int)KeybindingsAction::COUNT>
-KEYBINDINGS = {
-    // SCREENSHOT
-    (struct KeyBinding) {
-        .keyCombination = newKeyEvent(sf::Keyboard::F2),
-        .altKeyCombination = newKeyEvent(sf::Keyboard::F2),
-        .joystickButton = -1,
-        .isCustomEvent = true,
-        .customType = CustomEvent::Type::Screenshot
+const struct KeyBinding
+KEYBINDINGS[(int)KeybindingsAction::COUNT] = {
+    {
+        newKeyEvent(sf::Keyboard::F2),
+        newKeyEvent(sf::Keyboard::F2),
+        -1,
+        true,
+        CustomEvent::Type::Screenshot
     },
     // FULLSCREEN
-    (struct KeyBinding) {
-        .keyCombination = newKeyEvent(sf::Keyboard::F11),
-        .altKeyCombination = newKeyEvent(sf::Keyboard::F2),
-        .joystickButton = -1,
-        .isCustomEvent = true,
-        .customType = CustomEvent::Type::Fullscreen,
-        .activeOnKeyPress = false
+    {
+        newKeyEvent(sf::Keyboard::F11),
+        newKeyEvent(sf::Keyboard::F2),
+        -1,
+        true,
+        CustomEvent::Type::Fullscreen,
+        sf::Event::Count,
+        false
     },
     // PAUSE
-    (struct KeyBinding) {
-        .keyCombination = newKeyEvent(sf::Keyboard::Escape),
-        .altKeyCombination = newKeyEvent(sf::Keyboard::P),
-        .joystickButton = 1,
-        .isCustomEvent = true,
-        .customType = CustomEvent::Type::Pause
+    {
+        newKeyEvent(sf::Keyboard::Escape),
+        newKeyEvent(sf::Keyboard::P),
+        1,
+        true,
+        CustomEvent::Type::Pause
     }
+    // // SCREENSHOT
+    // {
+    //     newKeyEvent(sf::Keyboard::F2),
+    //     newKeyEvent(sf::Keyboard::F2),
+    //     -1,
+    //     true,
+    //     CustomEvent::Type::Screenshot
+    // },
+    // // FULLSCREEN
+    // {
+    //     newKeyEvent(sf::Keyboard::F11),
+    //     newKeyEvent(sf::Keyboard::F2),
+    //     -1,
+    //     true,
+    //     CustomEvent::Type::Fullscreen,
+    //     false
+    // },
+    // // PAUSE
+    // {
+    //     newKeyEvent(sf::Keyboard::Escape),
+    //     newKeyEvent(sf::Keyboard::P),
+    //     1,
+    //     true,
+    //     CustomEvent::Type::Pause
+    // }
 };
 /**
  * @brief use later

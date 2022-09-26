@@ -10,5 +10,5 @@
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
-    target.draw(_sprite, states);
+    _sprite.draw(target, states);
 }

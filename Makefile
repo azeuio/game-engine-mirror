@@ -76,9 +76,9 @@ clean:
 
 clean_gcovr:
 	@$(ECHO) "\033[1;31mCleaning gcovr...\033[0m"
-	@$(RM) $(shell find . -name "*.gcda")
-	@$(RM) $(shell find . -name "*.gcno")
-	@$(RM) $(shell find . -name "*.gcov")
+	@$(RM) *.gcda
+	@$(RM) *.gcno
+	@$(RM) *.gcov
 
 fclean: clean clean_gcovr
 	@$(ECHO) "\033[1;31mCleaning executable...\033[0m"
