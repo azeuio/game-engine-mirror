@@ -18,6 +18,7 @@ private:
     sf::Time _dt;
     sf::Time _prevTime;
 protected:
+    virtual ~Updatable(void) = default;
     /**
      * @brief Called before @ref onUpdate
      *
@@ -27,7 +28,9 @@ protected:
      *
      * @see onUpdate, update
      */
-    virtual void _setup(void) {};
+    virtual void _setup(void) {
+        // Made to be overriden
+    };
     /**
      * @brief Called after @ref onUpdate
      *
@@ -37,7 +40,9 @@ protected:
      *
      * @see onUpdate, update
      */
-    virtual void _cleanup(void) {};
+    virtual void _cleanup(void) {
+        // Made to be overriden
+    };
 public:
     /**
      * @brief Calls _setup, onUpdate and _cleanup in this order
@@ -61,5 +66,5 @@ public:
      * @param dt delta time in second elapsed since last call of update
      * @see update
      */
-    virtual void onUpdate(float dt) = 0;
+    virtual void onUpdate(sf::Time dt) = 0;
 };

@@ -13,9 +13,11 @@
 /**
  * @brief Basic Entity class, the building block of everything in this engine
  * Needs to be derived to be useful
+ * @see sf::Drawable, sf::Transformable
  */
-class Entity : public sf::Drawable, public sf::Transformable {
-protected:
+class Entity : public sf::Drawable, public sf::Transformable,
+public Updatable {
+private:
     /// @brief Sprite of the entity
     AnimatedSprite _sprite;
 public:
@@ -27,6 +29,7 @@ public:
      * @see AnimatedSprite
      */
     AnimatedSprite &getSprite(void);
+    void setSprite(AnimatedSprite const& sprite) { _sprite = sprite; }
 
     /**
      * @brief Draw the sprite to a render target
@@ -34,6 +37,10 @@ public:
      * @param target Render target to draw to
      * @param states Current render states
      */
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const
     final;
+    /**
+     * @brief Updates the sprite of the entity
+    */
+    void onUpdate(sf::Time dt) override;
 };

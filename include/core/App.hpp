@@ -11,10 +11,11 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+#include "core/Updatable.hpp"
 #include "core/CustomEvent.hpp"
 #include "core/EventManager.hpp"
 
-class App {
+class App : public Updatable {
 public:
     struct keybindings {
         sf::Keyboard::Key pause;
@@ -58,6 +59,11 @@ protected:
     virtual void onInit(void) {
         // Made to be overridden
     };
+    void _setup(void);
+    virtual void _cleanup(void)
+    {
+        // Made to be overriden
+    };
 public:
     explicit App(std::string const &title);
     App(std::string const &title, unsigned int width, unsigned int height);
@@ -89,13 +95,6 @@ public:
     screenshots/ folder
     */
     void takeScreenshot(void) const;
-    /** @brief Updates the window and calls onUpdate()
-     */
-    void update(void) {
-        _display.setView(_camera);
-        onUpdate();
-    };
-    virtual void onUpdate(void) = 0;
     /*
     \brief Polls for events and returns true if an event was polled
 

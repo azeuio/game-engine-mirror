@@ -7,7 +7,7 @@
 
 #include "demo/Demo.hpp"
 
-void Demo::onUpdate(void)
+void Demo::onUpdate(sf::Time dt)
 {
     if (isPaused()) {
         setClearColor(sf::Color::Blue);

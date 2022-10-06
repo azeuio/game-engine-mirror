@@ -14,11 +14,10 @@ void Updatable::update(void)
 
 void Updatable::update(sf::Time dt)
 {
-    sf::Time time = _clock.getElapsedTime();
+    _prevTime = _clock.getElapsedTime();
 
     _dt = dt;
-    _setup();
-    onUpdate(_dt.asSeconds());
-    _cleanup();
-    _prevTime = time;
+    this->_setup();
+    this->onUpdate(_dt);
+    this->_cleanup();
 }

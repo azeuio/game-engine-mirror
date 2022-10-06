@@ -8,14 +8,15 @@
 #pragma once
 
 #include "core/Entity.hpp"
+#include "ui/AnimatedSprite.hpp"
 
+/**
+ * @brief Entity that walks
+ * @see Entity
+ */
 class BugWalker : public Entity {
 public:
-    BugWalker() {
-        sf::Texture *texture = new sf::Texture();
+    BugWalker(void);
 
-        texture->loadFromFile("assets/demo/bug_walker.png");
-        _sprite = AnimatedSprite();
-        _sprite.setSpriteSheet(*texture);
-    }
+    void onUpdate(sf::Time dt) override;
 };

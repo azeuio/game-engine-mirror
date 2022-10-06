@@ -34,15 +34,17 @@ int launchDemo(void)
     int a = 0;
     bug.setScale(5, 5);
     while (app.isRunning()) {
-        app.getCamera().move(0.1F, 0.F);
-        bug.move(1.f, 1.f);
         if ((app.getCurrentFrame() % app.getFPS()) == 0) {
             app.setTitle(std::string(&"hello"[a++ % 5]));
         }
         while (app.pollEvent(event)) {
             // Every event is handled by the app
         }
-        app.update();
+        if (!app.isPaused()) {
+            app.getCamera().move(0.1F, 0.F);
+            app.update();
+            bug.update();
+        }
         app.draw();
         app.draw(circle);
         app.draw(bug);
