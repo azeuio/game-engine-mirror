@@ -84,7 +84,7 @@ fclean: clean clean_gcovr
 	@$(ECHO) "\033[1;31mCleaning executable...\033[0m"
 	@$(RM) $(NAME)
 
-re: fclean $(DEPENDENCIES) all
+re: fclean all
 
 tests_run: NAME = unit_tests
 tests_run: run_tests coverage
@@ -105,4 +105,7 @@ coverage:
 	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR)
 	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR) -b
 
-.phony: all clean fclean
+debug: CFLAGS += -g3 -O0
+debug: re
+
+.phony: all clean fclean re debug
