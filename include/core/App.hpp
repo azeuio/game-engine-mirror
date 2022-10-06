@@ -59,15 +59,15 @@ protected:
     virtual void onInit(void) {
         // Made to be overridden
     };
-    void _setup(void);
-    virtual void _cleanup(void)
+    void _setup(void) override;
+    void _cleanup(void) override
     {
         // Made to be overriden
     };
 public:
     explicit App(std::string const &title);
     App(std::string const &title, unsigned int width, unsigned int height);
-    virtual ~App() = default;
+    ~App() override = default;
 
     bool isRunning(void) const { return _isRunning; }
     bool isPaused(void) const { return _isPaused; }
