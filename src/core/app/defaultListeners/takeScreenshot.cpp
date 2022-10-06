@@ -44,7 +44,7 @@ void App::takeScreenshot(void) const
 #ifdef WINDOWS
     mkdir("screenshots");
 #else
-    mkdir("screenshots", 0777);
+    mkdir("screenshots", S_IRWXU | S_IRWXG | S_IROTH);
 #endif
     image.saveToFile(GetNextAvailableFilename("./screenshots/screenshot.png"));
 }
