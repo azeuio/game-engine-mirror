@@ -9,6 +9,8 @@
 #include "criterion/logging.h"
 #include "ui/SpriteSheet.hpp"
 
+#ifdef DISPLAY
+
 static bool rectEq(const sf::IntRect &rect, int x, int y, int w, int h)
 {
     return (
@@ -47,5 +49,5 @@ Test(get, first_anim_first)
     cr_assert(logRectEq(rect, 0, 0, 16, 16));
 }
 
-
+#endif
 // TODO: make more tests

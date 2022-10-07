@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 class SpriteSheet {
 private:

@@ -10,6 +10,8 @@
 #include "ui/SpriteSheet.hpp"
 #include "tests/prettyTests.hpp"
 
+#ifdef DISPLAY
+
 Test(constructor, empty)
 {
     SpriteSheet sheet;
@@ -80,3 +82,5 @@ Test(constructor, texture_dimensions)
     cr_assert_eq(sheet.getFrameSize().x, 16);
     cr_assert_eq(sheet.getFrameSize().y, 16);
 }
+
+#endif
