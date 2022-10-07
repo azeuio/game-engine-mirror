@@ -17,7 +17,12 @@ TEST_SRC	=	$(shell find $(TESTS_DIR) -name "*$(EXTENSION)" -type f)
 
 SRC	=	$(shell find src -name "*$(EXTENSION)" -type f)
 
+SRC_NO_MAIN	=	$(shell find src -name "*$(EXTENSION)" -type f | \
+				grep -v main.cpp | grep -v src/demo)
+
 OBJ	=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC))
+
+TEST_OBJ	=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC_NO_MAIN))
 
 CFLAGS	=	-std=c++2a -Wall -Wextra -Wshadow -Wpedantic -Iinclude -O3
 
@@ -92,18 +97,19 @@ tests_run: run_tests coverage
 ifneq (${DISPLAY},)
 run_tests: CFLAGS += -DDISPLAY
 endif
-run_tests: fclean
+run_tests: CFLAGS += --coverage -O0
+run_tests: LDFLAGS += -lcriterion
+run_tests: fclean $(TEST_OBJ)
 	@echo "\033[1;32mRunning tests...\033[0m"
-	@$(CC) $(shell find src -name "*$(EXTENSION)" -type f | \
-	grep -v main.cpp | grep -v src/demo) \
+	@$(CC) $(TEST_OBJ) \
 	$(TEST_SRC) \
-	-o $(NAME) $(CFLAGS) $(LDFLAGS) --coverage -lcriterion
+	-o $(NAME) $(CFLAGS) $(LDFLAGS)
 	@./$(NAME)
 	$(RM) $(NAME)
 
 coverage:
-	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR)
-	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR) -b
+	gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR)
+	gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR) -b
 
 debug: CFLAGS += -g3 -O0
 debug: re
