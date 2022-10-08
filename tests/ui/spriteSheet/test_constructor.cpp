@@ -83,4 +83,19 @@ Test(constructor, texture_dimensions)
     cr_assert_eq(sheet.getFrameSize().y, 16);
 }
 
+Test(constructor, set_animation)
+{
+    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{0, 1}, {0, 4}});
+
+    cr_assert_eq(sheet.getAnimations().size(), 2);
+    cr_assert_eq(sheet.getAnimations().at(0).first, 0);
+    cr_assert_eq(sheet.getAnimations().at(0).second, 1);
+    cr_assert_eq(sheet.getAnimations().at(1).first, 0);
+    cr_assert_eq(sheet.getAnimations().at(1).second, 4);
+    cr_assert_eq(sheet.getDimensions().x, 4);
+    cr_assert_eq(sheet.getDimensions().y, 1);
+    cr_assert_eq(sheet.getFrameSize().x, 16);
+    cr_assert_eq(sheet.getFrameSize().y, 16);
+}
+
 #endif

@@ -92,7 +92,7 @@ fclean: clean clean_gcovr
 re: fclean all
 
 tests_run: NAME = unit_tests
-tests_run: run_tests coverage
+tests_run: run_tests coverage clean
 
 ifneq (${DISPLAY},)
 run_tests: CFLAGS += -DDISPLAY

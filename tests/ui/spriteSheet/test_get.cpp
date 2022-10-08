@@ -43,11 +43,34 @@ Test(get, first)
 
 Test(get, first_anim_first)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1});
+    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}});
     sf::IntRect rect = sheet.get(0, 0);
+
+    cr_assert(logRectEq(rect, 16, 0, 16, 16));
+}
+
+Test(get, third)
+{
+    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1});
+    sf::IntRect rect = sheet.get(3);
+
+    cr_assert(logRectEq(rect, 48, 0, 16, 16));
+}
+
+Test(get, first_anim_second)
+{
+    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}});
+    sf::IntRect rect = sheet.get(1, 0);
+
+    cr_assert(logRectEq(rect, 32, 0, 16, 16));
+}
+
+Test(get, second_anim_first)
+{
+    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    sf::IntRect rect = sheet.get(0, 1);
 
     cr_assert(logRectEq(rect, 0, 0, 16, 16));
 }
 
 #endif
-// TODO: make more tests
