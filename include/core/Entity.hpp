@@ -21,6 +21,14 @@ private:
     /// @brief Sprite of the entity
     AnimatedSprite _sprite;
 public:
+    /**
+     * @brief It is recommended to implement this when deriving this class
+     * so that the user knows which animation they are setting
+    */
+    enum class Animation {
+        COUNT
+    };
+
     Entity(void) = default;
     /**
      * @brief Get the AnimatedSprite
@@ -28,8 +36,12 @@ public:
      * @return The animated sprite of this entity
      * @see AnimatedSprite
      */
-    AnimatedSprite &getSprite(void);
+    AnimatedSprite &getSprite(void) { return _sprite; }
     void setSprite(AnimatedSprite const& sprite) { _sprite = sprite; }
+    void setAnimation(uint8_t animation)
+    {
+        _sprite.setAnimation(animation);
+    }
 
     /**
      * @brief Draw the sprite to a render target

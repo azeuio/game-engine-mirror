@@ -49,7 +49,7 @@ public:
         sf::Texture &getTexture(void) { return _texture; }
         sf::Vector2u getFrameSize(void) const { return _frameSize; }
         sf::Vector2u getDimensions(void) const { return _dimensions; }
-        std::vector<std::pair<uint8_t, uint8_t>> getAnimations(void) const
+        std::vector<std::pair<uint8_t, uint8_t>> &getAnimations(void)
         {
             return _animations;
         }

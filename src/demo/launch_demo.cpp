@@ -28,6 +28,7 @@ int launchDemo(void)
         static int a;
         printf("paused a %d\n", a++);
     });
+    bug.setAnimation(BugWalker::Animation::WALK);
     circle.setOrigin(circle.getRadius(), circle.getRadius());
     circle.setFillColor(sf::Color::Green);
     app.setClearColor(sf::Color::Red);

@@ -11,9 +11,9 @@ BugWalker::BugWalker(void)
 {
     AnimatedSprite sprite("assets/demo/bug_walker.png");
 
-    sprite.getSpriteSheet().frameSize = {16, 16};
-    sprite.getSpriteSheet().animations = {{0, 4}};
-    sprite.getSpriteSheet().dimensions = {1, 4};
+    sprite.getSpriteSheet().setFrameSize({16, 16});
+    sprite.getSpriteSheet().setAnimations({{0, 1}, {0, 4}});
+    sprite.getSpriteSheet().setDimensions({4, 1});
     sprite.setSpeed(4);
     setSprite(sprite);
 }

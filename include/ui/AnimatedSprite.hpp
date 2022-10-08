@@ -14,24 +14,13 @@
 #include <SFML/Graphics.hpp>
 
 #include "core/Updatable.hpp"
+#include "ui/SpriteSheet.hpp"
 
 /**
  * @brief Sprite that can be animated using a sprite sheet.
  */
 class AnimatedSprite : public sf::Drawable, public sf::Transformable,
 public Updatable {
-public:
-    struct SpriteSheet {
-        /// @brief Sprite sheet that has every animations on it
-        sf::Texture texture = sf::Texture();
-        /// @brief Size of one frame. Used as units for the sprite sheet
-        sf::Vector2u frameSize = {0u, 0u};
-        /// @brief Size of the sprite sheet in frameSize units
-        sf::Vector2u dimensions = {1u, 1u};
-        /// @brief Vector of pair of start idx, lenght of animation
-        std::vector<std::pair<uint8_t, uint8_t>> animations = {{0, 1}};
-        SpriteSheet(void) = default;
-    };
 private:
     /// @brief Index of the active frame of the current animation
     float _frameIdx = 0.F;
@@ -39,7 +28,7 @@ private:
     uint8_t _currAnimation = 0.F;
     /// @brief Sprite representing the current frame of the animation
     sf::Sprite _frame;
-    struct SpriteSheet _spriteSheet;
+    SpriteSheet _spriteSheet;
     /// @brief frame per seconds of each animation
     float _speed = 24.F;
 protected:
@@ -75,12 +64,18 @@ public:
     /// @brief Get the list of animations
     std::vector<std::pair<uint8_t, uint8_t>> &getAnimations(void)
     {
-        return _spriteSheet.animations;
+        return _spriteSheet.getAnimations();
     }
     /// @brief Get the size of one frame
-    sf::Vector2u getFrameSize(void) const { return _spriteSheet.frameSize; }
+    sf::Vector2u getFrameSize(void) const
+    {
+        return _spriteSheet.getFrameSize();
+    }
     /// @brief Get the size of the sprite sheet
-    sf::Vector2u getDimensions(void) const { return _spriteSheet.dimensions; }
+    sf::Vector2u getDimensions(void) const
+    {
+        return _spriteSheet.getDimensions();
+    }
     float getSpeed(void) const { return _speed; }
 
     /**
@@ -90,11 +85,11 @@ public:
      */
     void setSpriteSheet(std::string const& filepath)
     {
-        _spriteSheet.texture.loadFromFile(filepath);
-        _spriteSheet.texture.loadFromFile(filepath);
-        _spriteSheet.frameSize = _spriteSheet.texture.getSize();
-        _spriteSheet.dimensions = {1, 1};
-        _spriteSheet.animations = {{0, 1}};
+        _spriteSheet.getTexture().loadFromFile(filepath);
+        _spriteSheet.getTexture().loadFromFile(filepath);
+        _spriteSheet.setFrameSize(_spriteSheet.getTexture().getSize());
+        _spriteSheet.setDimensions({1, 1});
+        _spriteSheet.setAnimations({{0, 1}});
     }
     /**
      * @brief Set the texture to use as sprite sheet
@@ -103,10 +98,10 @@ public:
      */
     void setSpriteSheet(const sf::Texture& texture)
     {
-        _spriteSheet.texture = texture;
-        _spriteSheet.frameSize = _spriteSheet.texture.getSize();
-        _spriteSheet.dimensions = {1, 1};
-        _spriteSheet.animations = {{0, 1}};
+        _spriteSheet.setTexture(texture);
+        _spriteSheet.setFrameSize(_spriteSheet.getTexture().getSize());
+        _spriteSheet.setDimensions({1, 1});
+        _spriteSheet.setAnimations({{0, 1}});
     }
     /**
      * @brief Set the texture to use as sprite sheet
@@ -124,7 +119,7 @@ public:
      */
     void setFrameSize(sf::Vector2u frameSize)
     {
-        _spriteSheet.frameSize = frameSize;
+        _spriteSheet.setFrameSize(frameSize);
     }
     /**
      * @brief Set the size of the sprite sheet
@@ -132,7 +127,7 @@ public:
      */
     void setDimensions(sf::Vector2u dimensions)
     {
-        _spriteSheet.dimensions = dimensions;
+        _spriteSheet.setDimensions(dimensions);
     }
     /**
      * @brief Set the current animation

@@ -16,7 +16,23 @@
  */
 class BugWalker : public Entity {
 public:
+    enum class Animation {
+        IDLE,
+        WALK,
+        COUNT
+    };
+
     BugWalker(void);
+
+    using Entity::setAnimation;
+    /**
+     * @brief Sets current animation to one of the available one
+     * @param animation Animation to switch to
+    */
+    void setAnimation(const Animation& animation)
+    {
+        this->getSprite().setAnimation((uint8_t)animation);
+    }
 
     void onUpdate(sf::Time dt) override;
 };

@@ -9,21 +9,13 @@
 
 void AnimatedSprite::onUpdate(sf::Time dt)
 {
-    sf::Vector2u framePos(0, 0);
-    sf::Vector2u size = _spriteSheet.frameSize;
-    auto [animStart, animLenght] = _spriteSheet.animations[_currAnimation];
+    auto animLenght = _spriteSheet.getAnimations().at(_currAnimation).second;
 
     _frameIdx += dt.asSeconds() * _speed;
     if (_frameIdx >= animLenght) {
         _frameIdx -= (float)animLenght;
     }
-    _frame.setTexture(_spriteSheet.texture);
-    framePos.x = size.x * animStart +
-    (size.x * (uint32_t)_frameIdx);
-    _frame.setTextureRect(sf::IntRect(
-        framePos.x,
-        framePos.y,
-        size.x,
-        size.y));
-
+    _frame.setTexture(_spriteSheet.getTexture());
+    sf::IntRect r = _spriteSheet.get((uint32_t)_frameIdx);
+    _frame.setTextureRect(r);
 }
