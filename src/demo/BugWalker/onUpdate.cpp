@@ -10,5 +10,6 @@
 void BugWalker::onUpdate(sf::Time dt)
 {
     Entity::onUpdate(dt);
-    move(0.1f, 0);
+    move(dt.asSeconds() * _speed, 0);
+    getAnimatedSprite().rotate(1);
 }

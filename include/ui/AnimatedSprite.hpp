@@ -31,6 +31,8 @@ private:
     SpriteSheet _spriteSheet;
     /// @brief frame per seconds of each animation
     float _speed = 24.F;
+    bool _isFlippedX = false;
+    bool _isFlippedY = false;
 protected:
     void _setup(void) final {
         // Virtual function is not needed
@@ -40,9 +42,11 @@ protected:
     };
 public:
     AnimatedSprite(void) = default;
-    explicit AnimatedSprite(std::string const& filepath)
+    explicit AnimatedSprite(std::string const& filepath,
+    const sf::Vector2u &dimensions = {1U, 1U},
+    const std::vector<std::pair<uint8_t, uint8_t>> &animations = {})
     {
-        setSpriteSheet(filepath);
+        setSpriteSheet(SpriteSheet(filepath, dimensions, animations));
     }
 
     /**
@@ -77,6 +81,8 @@ public:
         return _spriteSheet.getDimensions();
     }
     float getSpeed(void) const { return _speed; }
+    bool isFlippedX(void) const { return _isFlippedX; }
+    bool isFlippedY(void) const { return _isFlippedY; }
 
     /**
      * @brief Set the texture to use as sprite sheet
@@ -140,9 +146,16 @@ public:
     void setSpeed(float fps) { _speed = fps; }
 
     /**
-     * @brief Go to the next frame of the current animation
+     * @brief Flips the sprite Horizontally
+     * @see flipX
      */
-    void next(void);
+    void flip(void);
+
+    /// @brief Flips the sprite Horizontally
+    void flipX(void);
+
+    /// @brief Flips the sprite Vertically
+    void flipY(void);
 
     /**
      * @brief Draw the sprite to a render target

@@ -36,8 +36,8 @@ public:
      * @return The animated sprite of this entity
      * @see AnimatedSprite
      */
-    AnimatedSprite &getSprite(void) { return _sprite; }
-    void setSprite(AnimatedSprite const& sprite) { _sprite = sprite; }
+    AnimatedSprite &getAnimatedSprite(void) { return _sprite; }
+    void setAnimatedSprite(AnimatedSprite const& sprite) { _sprite = sprite; }
     void setAnimation(uint8_t animation)
     {
         _sprite.setAnimation(animation);

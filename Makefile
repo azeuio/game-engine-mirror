@@ -48,6 +48,12 @@ endif
 
 all: $(DEPENDENCIES) $(NAME)
 
+run: all
+	./$(NAME)
+
+hello:
+	@$(ECHO) "\033[1;32mHello, World!\033[0m"
+
 $(DEPENDENCIES): $(SRC)
 	@$(ECHO) "\033[1;32mGenerating dependencies...\033[0m"
 	@$(RM) $@
@@ -114,4 +120,4 @@ coverage:
 debug: CFLAGS += -g3 -O0
 debug: re
 
-.phony: all clean fclean re debug
+.phony: all clean fclean re debug run

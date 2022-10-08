@@ -73,4 +73,26 @@ Test(get, second_anim_first)
     cr_assert(logRectEq(rect, 0, 0, 16, 16));
 }
 
+Test(get, invalid_animation)
+{
+    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    sf::IntRect rect = sheet.get(0, -2);
+
+    cr_assert(logRectEq(rect, -1, -1, 0, 0));
+    sheet = SpriteSheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    rect = sheet.get(0, 4);
+    cr_assert(logRectEq(rect, -1, -1, 0, 0));
+}
+
+Test(get, invalid_frame_index)
+{
+    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    sf::IntRect rect = sheet.get(-2, 0);
+
+    cr_assert(logRectEq(rect, -1, -1, 0, 0));
+    sheet = SpriteSheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    rect = sheet.get(4, 0);
+    cr_assert(logRectEq(rect, -1, -1, 0, 0));
+}
+
 #endif

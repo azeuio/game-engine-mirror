@@ -14,4 +14,5 @@ void Demo::onUpdate(sf::Time dt)
     } else {
         setClearColor(sf::Color::Red);
     }
+    getCamera().move(dt.asSeconds(), 0);
 }

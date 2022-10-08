@@ -44,6 +44,7 @@ protected:
         // Made to be overriden
     };
 public:
+    sf::Time getDT(void) const { return _dt; }
     /**
      * @brief Calls _setup, onUpdate and _cleanup in this order
      * @see _setup, onUpdate, _cleanup

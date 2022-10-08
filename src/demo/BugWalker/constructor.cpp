@@ -15,5 +15,6 @@ BugWalker::BugWalker(void)
     sprite.getSpriteSheet().setAnimations({{0, 1}, {0, 4}});
     sprite.getSpriteSheet().setDimensions({4, 1});
     sprite.setSpeed(4);
-    setSprite(sprite);
+    sprite.setOrigin(8, 8);
+    setAnimatedSprite(sprite);
 }
