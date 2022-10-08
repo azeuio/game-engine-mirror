@@ -51,9 +51,6 @@ all: $(DEPENDENCIES) $(NAME)
 run: all
 	./$(NAME)
 
-hello:
-	@$(ECHO) "\033[1;32mHello, World!\033[0m"
-
 $(DEPENDENCIES): $(SRC)
 	@$(ECHO) "\033[1;32mGenerating dependencies...\033[0m"
 	@$(RM) $@

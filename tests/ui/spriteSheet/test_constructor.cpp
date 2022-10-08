@@ -27,7 +27,7 @@ Test(constructor, empty)
 
 Test(constructor, filepath)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png");
+    SpriteSheet sheet("assets/tests/bug_walker.png");
 
     cr_assert_eq(sheet.getAnimations().size(), 1);
     cr_assert_eq(sheet.getAnimations().at(0).first, 0);
@@ -40,7 +40,7 @@ Test(constructor, filepath)
 
 Test(constructor, filepath_dimensions)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1});
 
     cr_assert_eq(sheet.getAnimations().size(), 1);
     cr_assert_eq(sheet.getAnimations().at(0).first, 0);
@@ -54,7 +54,7 @@ Test(constructor, filepath_dimensions)
 Test(constructor, texture)
 {
     sf::Texture t;
-    t.loadFromFile("assets/demo/bug_walker.png");
+    t.loadFromFile("assets/tests/bug_walker.png");
     SpriteSheet sheet(t);
 
     cr_assert_eq(sheet.getAnimations().size(), 1);
@@ -69,7 +69,7 @@ Test(constructor, texture)
 Test(constructor, texture_dimensions)
 {
     sf::Texture t;
-    t.loadFromFile("assets/demo/bug_walker.png");
+    t.loadFromFile("assets/tests/bug_walker.png");
     SpriteSheet sheet(t, {4, 1});
     bool tmp;
 
@@ -85,7 +85,7 @@ Test(constructor, texture_dimensions)
 
 Test(constructor, set_animation)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{0, 1}, {0, 4}});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1}, {{0, 1}, {0, 4}});
 
     cr_assert_eq(sheet.getAnimations().size(), 2);
     cr_assert_eq(sheet.getAnimations().at(0).first, 0);

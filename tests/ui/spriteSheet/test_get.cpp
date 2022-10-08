@@ -35,7 +35,7 @@ static bool logRectEq(const sf::IntRect &rect, int x, int y, int w, int h)
 
 Test(get, first)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1});
     sf::IntRect rect = sheet.get(0);
 
     cr_assert(logRectEq(rect, 0, 0, 16, 16));
@@ -43,7 +43,7 @@ Test(get, first)
 
 Test(get, first_anim_first)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1}, {{1, 3}});
     sf::IntRect rect = sheet.get(0, 0);
 
     cr_assert(logRectEq(rect, 16, 0, 16, 16));
@@ -51,7 +51,7 @@ Test(get, first_anim_first)
 
 Test(get, third)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1});
     sf::IntRect rect = sheet.get(3);
 
     cr_assert(logRectEq(rect, 48, 0, 16, 16));
@@ -59,7 +59,7 @@ Test(get, third)
 
 Test(get, first_anim_second)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1}, {{1, 3}});
     sf::IntRect rect = sheet.get(1, 0);
 
     cr_assert(logRectEq(rect, 32, 0, 16, 16));
@@ -67,7 +67,7 @@ Test(get, first_anim_second)
 
 Test(get, second_anim_first)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
     sf::IntRect rect = sheet.get(0, 1);
 
     cr_assert(logRectEq(rect, 0, 0, 16, 16));
@@ -75,22 +75,22 @@ Test(get, second_anim_first)
 
 Test(get, invalid_animation)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
     sf::IntRect rect = sheet.get(0, -2);
 
     cr_assert(logRectEq(rect, -1, -1, 0, 0));
-    sheet = SpriteSheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    sheet = SpriteSheet("assets/tests/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
     rect = sheet.get(0, 4);
     cr_assert(logRectEq(rect, -1, -1, 0, 0));
 }
 
 Test(get, invalid_frame_index)
 {
-    SpriteSheet sheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    SpriteSheet sheet("assets/tests/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
     sf::IntRect rect = sheet.get(-2, 0);
 
     cr_assert(logRectEq(rect, -1, -1, 0, 0));
-    sheet = SpriteSheet("assets/demo/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
+    sheet = SpriteSheet("assets/tests/bug_walker.png", {4, 1}, {{1, 3}, {0, 2}});
     rect = sheet.get(4, 0);
     cr_assert(logRectEq(rect, -1, -1, 0, 0));
 }
