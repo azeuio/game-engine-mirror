@@ -117,4 +117,4 @@ coverage:
 debug: CFLAGS += -g3 -O0
 debug: re
 
-.phony: all clean fclean re debug run
+.phony: all clean fclean re debug run tests_run

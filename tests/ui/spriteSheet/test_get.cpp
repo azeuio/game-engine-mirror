@@ -95,4 +95,21 @@ Test(get, invalid_frame_index)
     cr_assert(logRectEq(rect, -1, -1, 0, 0));
 }
 
+Test(get, _2d_sheet)
+{
+    SpriteSheet sheet("assets/tests/bug_walker_square.png", {2, 2}, {{0, 4}, {2, 2}});
+    sf::IntRect rect = sheet.get(0, 0);
+
+    cr_assert(logRectEq(rect, 0, 0, 16, 16));
+    sheet = SpriteSheet("assets/tests/bug_walker_square.png", {2, 2}, {{0, 4}, {2, 2}});
+    rect = sheet.get(2, 0);
+    cr_assert(logRectEq(rect, 0, 16, 16, 16));
+    sheet = SpriteSheet("assets/tests/bug_walker_square.png", {2, 2}, {{0, 4}, {2, 2}});
+    rect = sheet.get(3, 0);
+    cr_assert(logRectEq(rect, 16, 16, 16, 16));
+    sheet = SpriteSheet("assets/tests/bug_walker_square.png", {2, 2}, {{0, 4}, {2, 2}});
+    rect = sheet.get(1, 1);
+    cr_assert(logRectEq(rect, 16, 16, 16, 16));
+}
+
 #endif

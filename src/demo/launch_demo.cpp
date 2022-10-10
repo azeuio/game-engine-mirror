@@ -60,7 +60,7 @@ int launchDemo(void)
     BugWalker bug;
 
     manager.subscribe(CustomEvent::EventType::Resized,
-    [](const CustomEvent &) { printf("resized\n"); });
+    [&event](const CustomEvent &) { printf("resized %d %d\n", event.size.width, event.size.height); });
     manager.subscribe(CustomEvent::Type::Pause,
     [](const CustomEvent &){
         static int a;
@@ -72,8 +72,7 @@ int launchDemo(void)
     app.setClearColor(sf::Color::Red);
     int a = 0;
     bug.setScale(5, 5);
-    // bug.setSpeed(50);
-    bug.setSpeed(0);
+    bug.setSpeed(50);
     app.getWindow().setFramerateLimit(0);
     sf::Vector2f camMovement;
     float camSpeed = 75;

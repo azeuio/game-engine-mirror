@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** game-engine-mirror [WSL : Ubuntu]
 ** File description:
-** flip
+** test_flip
 */
 
 #include "criterion/criterion.h"
