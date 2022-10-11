@@ -7,24 +7,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "demo/Demo.hpp"
+#include "demo/startDemo.hpp"
 
 int main(void)
 {
-    Demo app("SFML works!", 200, 200);
-    CustomEvent event;
-    sf::CircleShape shape(100.f);
-
-    shape.setFillColor(sf::Color::Green);
-    app.setClearColor(sf::Color::Red);
-    while (app.isRunning()) {
-        while (app.pollEvent(event)) {
-            // Every event is handled by the app
-        }
-        app.update();
-        app.draw();
-        app.draw(shape);
-        app.display();
-    }
-    return 0;
+    return launchDemo();
 }

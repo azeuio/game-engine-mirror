@@ -38,5 +38,15 @@
 screenshots/
 obj/
 
+# gcov files
+*.gcov
+*.gcda
+*.gcno
+
+#test executables
+unit_tests
+
 # misc
 .directory
+docs
+assets/css
