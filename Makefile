@@ -17,7 +17,12 @@ TEST_SRC	=	$(shell find $(TESTS_DIR) -name "*$(EXTENSION)" -type f)
 
 SRC	=	$(shell find src -name "*$(EXTENSION)" -type f)
 
+SRC_NO_MAIN	=	$(shell find src -name "*$(EXTENSION)" -type f | \
+				grep -v main.cpp | grep -v src/demo)
+
 OBJ	=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC))
+
+TEST_OBJ	=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC_NO_MAIN))
 
 CFLAGS	=	-std=c++2a -Wall -Wextra -Wshadow -Wpedantic -Iinclude -O3
 
@@ -42,6 +47,9 @@ NAME	:=	$(NAME:.exe=.out)
 endif
 
 all: $(DEPENDENCIES) $(NAME)
+
+run: all
+	./$(NAME)
 
 $(DEPENDENCIES): $(SRC)
 	@$(ECHO) "\033[1;32mGenerating dependencies...\033[0m"
@@ -76,15 +84,15 @@ clean:
 
 clean_gcovr:
 	@$(ECHO) "\033[1;31mCleaning gcovr...\033[0m"
-	@$(RM) $(shell find . -name "*.gcda")
-	@$(RM) $(shell find . -name "*.gcno")
-	@$(RM) $(shell find . -name "*.gcov")
+	@$(RM) *.gcda
+	@$(RM) *.gcno
+	@$(RM) *.gcov
 
 fclean: clean clean_gcovr
 	@$(ECHO) "\033[1;31mCleaning executable...\033[0m"
 	@$(RM) $(NAME)
 
-re: fclean $(DEPENDENCIES) all
+re: fclean all
 
 tests_run: NAME = unit_tests
 tests_run: run_tests coverage
@@ -92,17 +100,21 @@ tests_run: run_tests coverage
 ifneq (${DISPLAY},)
 run_tests: CFLAGS += -DDISPLAY
 endif
-run_tests: fclean
+run_tests: CFLAGS += --coverage -O0
+run_tests: LDFLAGS += -lcriterion
+run_tests: fclean $(TEST_OBJ)
 	@echo "\033[1;32mRunning tests...\033[0m"
-	@$(CC) $(shell find src -name "*$(EXTENSION)" -type f | \
-	grep -v main.cpp | grep -v src/demo) \
+	@$(CC) $(TEST_OBJ) \
 	$(TEST_SRC) \
-	-o $(NAME) $(CFLAGS) $(LDFLAGS) --coverage -lcriterion
+	-o $(NAME) $(CFLAGS) $(LDFLAGS)
 	@./$(NAME)
 	$(RM) $(NAME)
 
 coverage:
-	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR)
-	@gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR) -b
+	gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR)
+	gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR) -b
 
-.phony: all clean fclean
+debug: CFLAGS += -g3 -O0
+debug: re
+
+.phony: all clean fclean re debug run tests_run

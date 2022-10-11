@@ -8,12 +8,51 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "ui/AnimatedSprite.hpp"
 
-class Entity : public sf::Drawable, public sf::Transformable {
-protected:
-    sf::Sprite _sprite;
+/**
+ * @brief Basic Entity class, the building block of everything in this engine
+ * Needs to be derived to be useful
+ * @see sf::Drawable, sf::Transformable
+ */
+class Entity : public sf::Drawable, public sf::Transformable,
+public Updatable {
+private:
+    /// @brief Sprite of the entity
+    AnimatedSprite _sprite;
 public:
-    sf::Sprite &getSprite(void);
+    /**
+     * @brief It is recommended to implement this when deriving this class
+     * so that the user knows which animation they are setting
+    */
+    enum class Animation {
+        COUNT
+    };
 
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const final;
+    Entity(void) = default;
+    /**
+     * @brief Get the AnimatedSprite
+     *
+     * @return The animated sprite of this entity
+     * @see AnimatedSprite
+     */
+    AnimatedSprite &getAnimatedSprite(void) { return _sprite; }
+    void setAnimatedSprite(AnimatedSprite const& sprite) { _sprite = sprite; }
+    void setAnimation(uint8_t animation)
+    {
+        _sprite.setAnimation(animation);
+    }
+
+    /**
+     * @brief Draw the sprite to a render target
+     *
+     * @param target Render target to draw to
+     * @param states Current render states
+     */
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const
+    final;
+    /**
+     * @brief Updates the sprite of the entity
+    */
+    void onUpdate(sf::Time dt) override;
 };
