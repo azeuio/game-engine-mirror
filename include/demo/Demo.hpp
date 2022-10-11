@@ -12,7 +12,7 @@
 class Demo : public App {
     public:
         using App::App;
-        void onUpdate(void) final;
+        void onUpdate(sf::Time dt) final;
 };
 
 void demo_1(void);

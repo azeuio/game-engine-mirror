@@ -43,5 +43,10 @@ obj/
 *.gcda
 *.gcno
 
+#test executables
+unit_tests
+
 # misc
 .directory
+docs
+assets/css

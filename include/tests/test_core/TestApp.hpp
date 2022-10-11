@@ -11,9 +11,10 @@
 
 class TestApp : public App {
     public:
+        TestApp(void) : App("TestApp", 1080, 720) {};
         using App::App;
 
-        void onUpdate(void) final {
+        void onUpdate([[maybe_unused]]sf::Time dt) final {
             // Doesn't need to be implemented
         };
 
