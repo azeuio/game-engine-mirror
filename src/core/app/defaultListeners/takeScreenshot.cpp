@@ -17,7 +17,7 @@ static bool fileExists(const std::string &name)
     return f.good();
 }
 
-static std::string GetNextAvailableFilename(std::string filename)
+static std::string GetNextAvailableFilename(std::string const& filename)
 {
     std::string alternateFilename = filename;
     int fileNameIndex = 1;
@@ -41,6 +41,10 @@ void App::takeScreenshot(void) const
     texture.create(size.x, size.y);
     texture.update(_window);
     image = texture.copyToImage();
-    mkdir("screenshots", 0777);
+#ifdef WINDOWS
+    mkdir("screenshots");
+#else
+    mkdir("screenshots", S_IRWXU | S_IRWXG);
+#endif
     image.saveToFile(GetNextAvailableFilename("./screenshots/screenshot.png"));
 }

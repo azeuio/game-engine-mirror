@@ -9,5 +9,10 @@
 
 void App::draw(void)
 {
-    _window.clear(_clearColor);
+    _display.clear(sf::Color::Blue);
+}
+
+void App::draw(sf::Drawable const &drawable)
+{
+    _display.draw(drawable);
 }
