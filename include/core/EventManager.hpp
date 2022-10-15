@@ -23,6 +23,7 @@ public:
 private:
     std::vector<
     std::vector<struct EventListenerData>> _listeners;
+    unsigned int id;
 public:
     EventManager(void) {
         int nbListenerType = (

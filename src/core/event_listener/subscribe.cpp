@@ -7,8 +7,6 @@
 
 #include "core/EventManager.hpp"
 
-static unsigned int id;
-
 int EventManager::subscribe(CustomEvent::Type type,
 std::function<void (const CustomEvent &)> const& callback)
 {
