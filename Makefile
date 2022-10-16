@@ -63,16 +63,19 @@ obj/%.o: src/%$(EXTENSION)
 	@mkdir -p $$($(ECHO) $(@D) | sed 's/src/obj/g')
 	@$(CC) -c $< -o $@ $(CFLAGS)
 
+make_obj:
+	@$(MAKE) --jobs=$(shell nproc) $(OBJ)
+
 ifeq ($(OS),Windows_NT)
-$(NAME): $(OBJ)
+$(NAME): make_obj
 	@$(ECHO) "\033[36;1mCopying dlls to $(CURDIR)\033[0m"
 	@$(RM) $(wildcard $(CURDIR)/*.dll)
 	@cp $(DLLS) $(CURDIR)
-	@$(ECHO) "\033[1;32mLinking $@\033[0m"
+	@$(ECHO) "\033[1;36mLinking $@\033[0m"
 	@$(CC) $(shell find obj -name *.o) -o $(NAME) $(LDFLAGS) $(CFLAGS)
 else
-$(NAME): $(OBJ)
-	@$(ECHO) "\033[1;32mLinking $@\033[0m"
+$(NAME): make_obj
+	@$(ECHO) "\033[1;36mLinking $@\033[0m"
 	@$(CC) $(shell find obj -name *.o) -o $(NAME) $(LDFLAGS) $(CFLAGS)
 endif
 
@@ -95,20 +98,24 @@ fclean: clean clean_gcovr
 re: fclean all
 
 tests_run: NAME = unit_tests
-tests_run: run_tests coverage
+tests_run: tests_build coverage
+	@echo "\033[1;32mRunning tests...\033[0m"
+	@./$(NAME)
+	$(RM) $(NAME)
+
+make_test_obj:
+	@$(MAKE) --jobs=$(shell nproc) $(TEST_OBJ)
 
 ifneq (${DISPLAY},)
-run_tests: CFLAGS += -DDISPLAY
+tests_build: CFLAGS += -DDISPLAY
 endif
-run_tests: CFLAGS += --coverage -O0
-run_tests: LDFLAGS += -lcriterion
-run_tests: fclean $(TEST_OBJ)
-	@echo "\033[1;32mRunning tests...\033[0m"
+tests_build: CFLAGS += --coverage -O0
+tests_build: LDFLAGS += -lcriterion
+tests_build: fclean make_test_obj
+	@echo "\033[1;36mLinking tests...\033[0m"
 	@$(CC) $(TEST_OBJ) \
 	$(TEST_SRC) \
 	-o $(NAME) $(CFLAGS) $(LDFLAGS)
-	@./$(NAME)
-	$(RM) $(NAME)
 
 coverage:
 	gcovr --exclude $(TESTS_DIR) --exclude include/$(TESTS_DIR)
